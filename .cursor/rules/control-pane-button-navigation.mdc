@@ -1,0 +1,9 @@
+---
+description: Control Pane — prefer React Router Link for in-app navigation (MUI buttons)
+globs: packages/control-pane/**/*.tsx
+---
+
+# Button navigation (Control Pane)
+
+- For in-app navigation, use **React Router** `Link` (or `NavLink`) instead of buttons that only call `navigate()` without a real link, when you want right-click / open-in-new-tab behavior.
+- With MUI: `import { Link } from 'react-router-dom'` and `<Button component={Link} to="...">`.

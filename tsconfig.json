@@ -3,6 +3,7 @@
   "references": [
     { "path": "./packages/shared-types" },
     { "path": "./packages/server" },
-    { "path": "./packages/hr-admin" }
+    { "path": "./packages/hr-admin" },
+    { "path": "./packages/control-pane" }
   ]
 }

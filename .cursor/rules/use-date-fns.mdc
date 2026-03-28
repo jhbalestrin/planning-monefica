@@ -1,5 +1,5 @@
 ---
-description: Use date-fns for date logic in server, hr-admin, and ic-app
+description: Use date-fns for date logic in server, hr-admin, control-pane, and ic-app
 globs: packages/**/*.ts,packages/**/*.tsx
 ---
 

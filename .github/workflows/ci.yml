@@ -29,11 +29,17 @@ jobs:
       - name: Build hr-admin
         run: npm run build -w @planning-monefica/hr-admin
 
+      - name: Build control-pane
+        run: npm run build -w @planning-monefica/control-pane
+
       - name: Test server
         run: npm run test -w @planning-monefica/server
 
       - name: Test hr-admin
         run: npm run test -w @planning-monefica/hr-admin
+
+      - name: Test control-pane
+        run: npm run test -w @planning-monefica/control-pane
 
       - name: Typecheck ic-app
         run: npm run typecheck -w @planning-monefica/ic-app

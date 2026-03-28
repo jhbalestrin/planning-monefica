@@ -1,6 +1,6 @@
 # New monorepo implementation guide (HRAdmin + ICApp)
 
-This guide describes the **four-package** npm workspace in **this repository** (`planning-monefica`), aligned with the **Monefica** stack and application patterns. Implementation paths below point at **this repo**; for the upstream Monefica monorepo, use your company’s internal clone.
+This guide describes the **five-package** npm workspace in **this repository** (`planning-monefica`), aligned with the **Monefica** stack and application patterns. Implementation paths below point at **this repo**; for the upstream Monefica monorepo, use your company’s internal clone.
 
 ## Table of contents
 
@@ -26,9 +26,10 @@ This guide describes the **four-package** npm workspace in **this repository** (
 | **server** | [`packages/server`](../../packages/server) | Node **22+**, **NestJS 11**, **Mongoose 8** / MongoDB, `env-cmd` + `.env`, Jest |
 | **shared-types** | [`packages/shared-types`](../../packages/shared-types) | TypeScript-only, `tsc` → `dist/`, `package.json` **exports** (see [`EXPORTS_SETUP.md`](./EXPORTS_SETUP.md)) |
 | **HRAdmin** | [`packages/hr-admin`](../../packages/hr-admin) | **Vite 8**, **React 19**, **MUI 7**, **Redux Toolkit**, **React Router 7**, **Axios**, **date-fns**, Vitest; optional Playwright E2E |
+| **Control Pane** | [`packages/control-pane`](../../packages/control-pane) | Same stack as HRAdmin (second Vite SPA; dev **port 3001** vs 3000) |
 | **ICApp** | [`packages/ic-app`](../../packages/ic-app) | **Expo** + **React Native**, Android-first; RTK / React Redux, **date-fns** |
 
-**Out of scope for the initial four packages:** a separate `ui-lib` package (Monefica has one). This repo starts with MUI inside HR Admin; extract a shared UI library later if needed.
+**Out of scope for the initial packages:** a separate `ui-lib` package (Monefica has one). This repo starts with MUI inside HR Admin; extract a shared UI library later if needed.
 
 ---
 
@@ -37,7 +38,7 @@ This guide describes the **four-package** npm workspace in **this repository** (
 ```
 your-monorepo/
 ├── package.json                 # workspaces, root scripts
-├── tsconfig.json                # solution-style references (server, shared-types, hr-admin)
+├── tsconfig.json                # solution-style references (server, shared-types, hr-admin, control-pane)
 ├── .gitignore
 ├── .cursor/
 │   └── rules/                   # optional: copy patterns from Monefica (see below)
@@ -58,6 +59,10 @@ your-monorepo/
     │   ├── package.json
     │   ├── vite.config.ts
     │   └── src/
+    ├── control-pane/            # second Vite SPA (Control Pane)
+    │   ├── package.json
+    │   ├── vite.config.ts
+    │   └── src/
     └── ic-app/                  # Expo app (Android focus)
         ├── package.json
         ├── app.json / app.config.*
@@ -68,12 +73,12 @@ your-monorepo/
 
 Root [`package.json`](../../package.json):
 
-- `"workspaces": ["packages/shared-types", "packages/server", "packages/hr-admin", "packages/ic-app"]`
+- `"workspaces": ["packages/shared-types", "packages/server", "packages/hr-admin", "packages/control-pane", "packages/ic-app"]`
 - Scripts such as `install:deps` (e.g. `PUPPETEER_SKIP_DOWNLOAD=1 npm install` if you add Puppeteer later), optional `start` that runs `node packages/server/dist/main.js` after build.
 
 ### TypeScript project references
 
-Root [`tsconfig.json`](../../tsconfig.json): `references` include `packages/server`, `packages/shared-types`, and `packages/hr-admin`. **ICApp** uses Expo’s own TypeScript config and is not in the root solution graph.
+Root [`tsconfig.json`](../../tsconfig.json): `references` include `packages/server`, `packages/shared-types`, `packages/hr-admin`, and `packages/control-pane`. **ICApp** uses Expo’s own TypeScript config and is not in the root solution graph.
 
 ---
 
@@ -87,19 +92,21 @@ Complete in this order to avoid broken imports and CI surprises.
    - `package.json`: `main`, `types`, `exports` for the root entry and optional subpaths (see [`EXPORTS_SETUP.md`](./EXPORTS_SETUP.md)).
    - Run `npm run build` in that package and confirm `dist/` is published (or built in CI before consumers).
 3. **Wire workspace dependencies**
-   - In `server` and `hr-admin`, depend on `@planning-monefica/shared-types` via `file:../shared-types` (this repo) or `workspace:*` when your npm version resolves it reliably.
+   - In `server`, `hr-admin`, and `control-pane`, depend on `@planning-monefica/shared-types` via `file:../shared-types` (this repo) or `workspace:*` when your npm version resolves it reliably.
    - Optionally add `shared-types` as a dev dependency in `ic-app` if the mobile app imports API DTO types.
 4. **Scaffold NestJS `server`**
    - `@nestjs/mongoose`, Mongoose connection from config (`MONGODB_URL` or split host/db vars).
    - Global validation pipe, versioning, CORS, and production hardening consistent with [`main.ts`](../../packages/server/src/main.ts) (helmet, `trust proxy`, origin allowlist per `ENV`).
 5. **Scaffold Vite `hr-admin`**
    - Proxy `/api` to the API port (this repo: `localhost:5555` in [`vite.config.ts`](../../packages/hr-admin/vite.config.ts); align ports across `.env` and docs).
+5b. **Scaffold Vite `control-pane`** (optional second web app)
+   - Same proxy pattern as HR Admin; use a **different dev port** (this repo: **3001** in [`vite.config.ts`](../../packages/control-pane/vite.config.ts)) so both SPAs can run together.
 6. **Scaffold Expo `ic-app`**
    - Android dev client, env documentation (see [`ENV_SETUP.md`](../../packages/ic-app/ENV_SETUP.md), [`PROJECT_OVERVIEW.md`](../../packages/ic-app/PROJECT_OVERVIEW.md)).
 7. **Local DNS / hosts**
    - Add entries similar to [CLAUDE.md](../../CLAUDE.md) (e.g. `local.hradmin.example.com` → `127.0.0.1`) and point Vite `--host` at that hostname if you need cookie/cors parity with production.
 8. **CI**
-   - Install → build `shared-types` → build `server` → build `hr-admin`; run tests per package. Mobile: lint/test and optional EAS build on tags.
+   - Install → build `shared-types` → build `server` → build `hr-admin` → build `control-pane`; run tests per package. Mobile: lint/test and optional EAS build on tags.
 
 ---
 
@@ -132,11 +139,11 @@ These rules mirror Monefica’s server conventions; this repo ships Cursor rules
 
 | Topic | Guidance | Reference |
 |-------|----------|-----------|
-| Feature / page structure | Page modules: containers, components, `state/` (RTK), `services/` (HTTP) | [`page-module-patterns.md`](../../packages/hr-admin/docs/page-module-patterns.md) (reference: Monefica `consultor/src/genericPages/login`). |
+| Feature / page structure | Page modules: containers, components, `state/` (RTK), `services/` (HTTP) | HR Admin: [`page-module-patterns.md`](../../packages/hr-admin/docs/page-module-patterns.md); Control Pane: [`page-module-patterns.md`](../../packages/control-pane/docs/page-module-patterns.md) (reference: Monefica `consultor/src/genericPages/login`). |
 | Redux | Redux Toolkit; async reducer injection where code-splitting is needed | Same |
 | Navigation UX | Use **React Router `Link`** with MUI `Button component={Link} to="..."` for route navigation (right-click / new tab) | [`.cursor/rules/hr-admin-button-navigation.mdc`](../../.cursor/rules/hr-admin-button-navigation.mdc) |
-| Build output | Vite `build` → static assets (`outDir: ./build`) | [`vite.config.ts`](../../packages/hr-admin/vite.config.ts) |
-| API base URL | Dev: proxy `/api` to backend; prod: env-driven API origin | `vite` `server.proxy` in [`vite.config.ts`](../../packages/hr-admin/vite.config.ts) |
+| Build output | Vite `build` → static assets (`outDir: ./build`) | [`vite.config.ts`](../../packages/hr-admin/vite.config.ts), [`vite.config.ts`](../../packages/control-pane/vite.config.ts) |
+| API base URL | Dev: proxy `/api` to backend; prod: env-driven API origin | `vite` `server.proxy` in each Vite app’s `vite.config.ts` |
 
 ---
 
@@ -161,6 +168,7 @@ These rules mirror Monefica’s server conventions; this repo ships Cursor rules
 | **shared-types** | `npm run build` / `npm run dev` (tsc --watch) | N/A | N/A |
 | **server** | `npm run dev` (Nest watch) | `PORT` (e.g. 5555) | `packages/server/.env` |
 | **hr-admin** | `npm run start` (Vite) | 3000 (or Vite default); proxy `/api` → API | `packages/hr-admin/.env` |
+| **control-pane** | `npm run start` (Vite) | 3001; proxy `/api` → API | `packages/control-pane/.env` |
 | **ic-app** | `npm start` / `expo run:android` | Metro / device | `.env` / app config as per Expo |
 
 Adjust ports in one place and reflect them in Vite proxy and mobile API config.
@@ -184,6 +192,10 @@ Adjust ports in one place and reflect them in Vite proxy and mobile API config.
   Use **single-page app fallback** so client-side routes reload correctly (`-s` in `serve` handles this).
 - Configure CDN/host headers and HTTPS to match security expectations (Monefica disables strict CSP in some setups in code — re-evaluate for your product).
 
+### Control Pane (static SPA)
+
+- Same as HR Admin: build from `packages/control-pane`, deploy `build/` behind a static host with SPA fallback and the correct `VITE_API_BASE_URL` (or equivalent) for production.
+
 ### ICApp (Android)
 
 - Release builds via **EAS Build** or CI → **Google Play** (or internal track). Document signing, package name, and API base URLs per flavor.
@@ -193,7 +205,7 @@ Adjust ports in one place and reflect them in Vite proxy and mobile API config.
 ## Tooling and AI assistant rules
 
 - **ESLint / Prettier:** per package, aligned TypeScript and React versions; optional root orchestration script.
-- **Cursor / team rules:** Present in [`.cursor/rules/`](../../.cursor/rules/): `server-module-communication.mdc`, `server-no-inline-types.mdc`, `use-date-fns.mdc`, `hr-admin-button-navigation.mdc`.
+- **Cursor / team rules:** Present in [`.cursor/rules/`](../../.cursor/rules/): `server-module-communication.mdc`, `server-no-inline-types.mdc`, `use-date-fns.mdc`, `hr-admin-button-navigation.mdc`, `control-pane-button-navigation.mdc`, `hr-admin-page-modules.mdc`, `control-pane-page-modules.mdc`.
 - **Contributor overview:** [CLAUDE.md](../../CLAUDE.md) and [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 ---
@@ -202,16 +214,17 @@ Adjust ports in one place and reflect them in Vite proxy and mobile API config.
 
 Use this when reviewing the new monorepo against this project’s standards.
 
-- [ ] npm **workspaces** at root with four packages
+- [ ] npm **workspaces** at root with five packages (including Control Pane web app)
 - [ ] **`shared-types`**: `tsc` to `dist`, **`package.json` `exports`**, Node16 resolution
 - [ ] **Server**: NestJS 11, Mongoose/MongoDB, env-based config
 - [ ] **Server**: module boundaries — **services only** between modules
 - [ ] **Server**: types in **`.interface.ts`** only (no inline module API types)
-- [ ] **date-fns** used for dates on server, HRAdmin, and ICApp
+- [ ] **date-fns** used for dates on server, HRAdmin, Control Pane, and ICApp
 - [ ] **HRAdmin**: Vite + React 19 + MUI + RTK + React Router
-- [ ] **HRAdmin**: navigation buttons use **`Link`** / `component={Link}` where applicable
+- [ ] **Control Pane**: same web stack as HRAdmin; distinct dev port if both run locally
+- [ ] **HRAdmin** / **Control Pane**: navigation buttons use **`Link`** / `component={Link}` where applicable
 - [ ] **ICApp**: Expo + React Native, Android release path documented
-- [ ] **CI**: build **shared-types** before server and web
+- [ ] **CI**: build **shared-types** before server and web (hr-admin and control-pane)
 - [ ] **Hosting**: Node API + static SPA (e.g. **serve -s**) + mobile distribution documented
 
 ---
@@ -224,13 +237,16 @@ flowchart LR
     ST[shared-types]
     S[server]
     W[HRAdmin]
+    C[Control Pane]
     M[ICApp]
   end
   ST --> S
   ST --> W
+  ST --> C
   ST -. optional .-> M
   S --> MongoDB[(MongoDB)]
   W -->|HTTPS API| S
+  C -->|HTTPS API| S
   M -->|HTTPS API| S
 ```
 
