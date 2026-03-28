@@ -1,0 +1,28 @@
+{
+  "name": "@planning-monefica/ic-app",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "test": "node -e \"console.log('Add tests when ready'); process.exit(0)\""
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.1",
+    "date-fns": "^4.1.0",
+    "expo": "55.0.10-canary-20260327-0789fbc",
+    "expo-status-bar": "55.0.5-canary-20260327-0789fbc",
+    "react": "19.2.0",
+    "react-native": "0.83.4",
+    "react-redux": "^9.2.0"
+  },
+  "devDependencies": {
+    "@planning-monefica/shared-types": "file:../shared-types",
+    "@types/react": "~19.2.2",
+    "typescript": "~5.9.2"
+  },
+  "private": true
+}

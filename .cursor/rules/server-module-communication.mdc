@@ -1,0 +1,10 @@
+---
+description: Nest server — cross-module access only via owning module services
+globs: packages/server/**/*.ts
+---
+
+# Server module communication
+
+- Do **not** import another Nest module’s Mongoose schemas, models, or repositories from outside that module.
+- Cross-module behavior must go through the **owning module’s public service API** (or explicit shared kernel types in `shared-types`, not ad-hoc schema sharing).
+- Keep domain boundaries: one feature module owns its persistence and exposes intentional methods.

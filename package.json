@@ -1,0 +1,21 @@
+{
+  "name": "planning-monefica",
+  "private": true,
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "packages/shared-types",
+    "packages/server",
+    "packages/hr-admin",
+    "packages/ic-app"
+  ],
+  "scripts": {
+    "install:deps": "PUPPETEER_SKIP_DOWNLOAD=1 npm install",
+    "build": "npm run build -w @planning-monefica/shared-types && npm run build -w @planning-monefica/server && npm run build -w @planning-monefica/hr-admin",
+    "build:shared-types": "npm run build -w @planning-monefica/shared-types",
+    "test": "npm run test --workspaces --if-present",
+    "start": "node packages/server/dist/main.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

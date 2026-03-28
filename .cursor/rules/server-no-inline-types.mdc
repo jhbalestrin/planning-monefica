@@ -1,0 +1,10 @@
+---
+description: Nest server — module API types live in .interface.ts files
+globs: packages/server/**/*.ts
+---
+
+# No inline module API types
+
+- Put shared interfaces and DTO-shaped types for a module in **`*.interface.ts`** files colocated with that module.
+- Avoid large inline `interface` / `type` definitions inside `*.service.ts` or `*.controller.ts` for anything that defines the module’s public contract.
+- Re-export or import from `@planning-monefica/shared-types` when the contract is cross-cutting.

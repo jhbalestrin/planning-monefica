@@ -1,0 +1,35 @@
+node_modules/
+dist/
+build/
+*.log
+.env
+.env.local
+.env.*.local
+.DS_Store
+Thumbs.db
+coverage/
+*.tsbuildinfo
+
+# Expo / React Native
+packages/ic-app/.expo/
+packages/ic-app/dist/
+packages/ic-app/web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Android
+packages/ic-app/android/.gradle/
+packages/ic-app/android/app/build/
+packages/ic-app/android/build/
+packages/ic-app/android/local.properties
+*.apk
+*.aab
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json

@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build shared-types
+        run: npm run build -w @planning-monefica/shared-types
+
+      - name: Build server
+        run: npm run build -w @planning-monefica/server
+
+      - name: Build hr-admin
+        run: npm run build -w @planning-monefica/hr-admin
+
+      - name: Test server
+        run: npm run test -w @planning-monefica/server
+
+      - name: Test hr-admin
+        run: npm run test -w @planning-monefica/hr-admin
+
+      - name: Typecheck ic-app
+        run: npm run typecheck -w @planning-monefica/ic-app
+
+      - name: Test ic-app (placeholder)
+        run: npm run test -w @planning-monefica/ic-app

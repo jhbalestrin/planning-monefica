@@ -1,0 +1,9 @@
+---
+description: Use date-fns for date logic in server, hr-admin, and ic-app
+globs: packages/**/*.ts,packages/**/*.tsx
+---
+
+# Use date-fns
+
+- Prefer **date-fns** for formatting, parsing, and arithmetic (`formatISO`, `addDays`, etc.).
+- Avoid `moment` and ad-hoc `new Date` string formatting in business logic.
