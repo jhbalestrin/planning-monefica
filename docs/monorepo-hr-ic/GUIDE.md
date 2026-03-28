@@ -112,8 +112,8 @@ Complete in this order to avoid broken imports and CI surprises.
 
 ## Cross-package contracts
 
-- **Source of truth for API shapes:** `@planning-monefica/shared-types`. Controllers and DTOs on the server and request/response typing in HRAdmin (and optionally ICApp) should align with these types.
-- **Build order:** any job that compiles `server` or `hr-admin` must **build `shared-types` first** (or depend on a published version).
+- **Source of truth for API shapes:** `@planning-monefica/shared-types`. Controllers and DTOs on the server and request/response typing in HRAdmin, Control Pane, and optionally ICApp should align with these types.
+- **Build order:** any job that compiles `server`, `hr-admin`, or `control-pane` must **build `shared-types` first** (or depend on a published version).
 - **Versioning:** for releases, bump `shared-types` when breaking contract changes; keep server and clients on compatible versions.
 
 ---
@@ -141,7 +141,7 @@ These rules mirror Monefica’s server conventions; this repo ships Cursor rules
 |-------|----------|-----------|
 | Feature / page structure | Page modules: containers, components, `state/` (RTK), `services/` (HTTP) | HR Admin: [`page-module-patterns.md`](../../packages/hr-admin/docs/page-module-patterns.md); Control Pane: [`page-module-patterns.md`](../../packages/control-pane/docs/page-module-patterns.md) (reference: Monefica `consultor/src/genericPages/login`). |
 | Redux | Redux Toolkit; async reducer injection where code-splitting is needed | Same |
-| Navigation UX | Use **React Router `Link`** with MUI `Button component={Link} to="..."` for route navigation (right-click / new tab) | [`.cursor/rules/hr-admin-button-navigation.mdc`](../../.cursor/rules/hr-admin-button-navigation.mdc) |
+| Navigation UX | Use **React Router `Link`** with MUI `Button component={Link} to="..."` for route navigation (right-click / new tab) | HR Admin: [`.cursor/rules/hr-admin-button-navigation.mdc`](../../.cursor/rules/hr-admin-button-navigation.mdc); Control Pane: [`.cursor/rules/control-pane-button-navigation.mdc`](../../.cursor/rules/control-pane-button-navigation.mdc) |
 | Build output | Vite `build` → static assets (`outDir: ./build`) | [`vite.config.ts`](../../packages/hr-admin/vite.config.ts), [`vite.config.ts`](../../packages/control-pane/vite.config.ts) |
 | API base URL | Dev: proxy `/api` to backend; prod: env-driven API origin | `vite` `server.proxy` in each Vite app’s `vite.config.ts` |
 
