@@ -132,7 +132,7 @@ These rules mirror Monefica’s server conventions; this repo ships Cursor rules
 
 | Topic | Guidance | Reference |
 |-------|----------|-----------|
-| Feature / page structure | Page modules: containers, components, `state/` (RTK), `services/` (HTTP) | Add `packages/hr-admin/docs/page-module-patterns.md` when you document feature layout (Monefica consultor has a reference). |
+| Feature / page structure | Page modules: containers, components, `state/` (RTK), `services/` (HTTP) | [`page-module-patterns.md`](../../packages/hr-admin/docs/page-module-patterns.md) (reference: Monefica `consultor/src/genericPages/login`). |
 | Redux | Redux Toolkit; async reducer injection where code-splitting is needed | Same |
 | Navigation UX | Use **React Router `Link`** with MUI `Button component={Link} to="..."` for route navigation (right-click / new tab) | [`.cursor/rules/hr-admin-button-navigation.mdc`](../../.cursor/rules/hr-admin-button-navigation.mdc) |
 | Build output | Vite `build` → static assets (`outDir: ./build`) | [`vite.config.ts`](../../packages/hr-admin/vite.config.ts) |

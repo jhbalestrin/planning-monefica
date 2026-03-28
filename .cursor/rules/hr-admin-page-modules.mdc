@@ -1,0 +1,20 @@
+---
+description: HR Admin — colocate new screens as page modules (containers, components, api)
+globs: packages/hr-admin/**/*.{tsx,ts}
+---
+
+# HR Admin page modules
+
+When adding or restructuring a **screen** in `packages/hr-admin`:
+
+1. **Place** it under `src/pages/<pageName>/` (kebab-case folder matching the feature, e.g. `home`, `employees`).
+2. **Split** concerns:
+   - **`containers/`** — connect RTK Query, Redux, and router hooks; pass data and handlers into views.
+   - **`components/`** — presentational only (props in, no `useGetQuery` / `axios` here).
+   - **`api/`** — RTK Query `createApi` for that page’s HTTP; optional `handlers/` for `onQueryStarted` side effects (same idea as Monefica consultor `genericPages/login/api`).
+   - **`state/`** — optional Redux slice for page-local form/UI state not covered by RTK Query.
+   - **`services/`** — optional; prefer `api/` + RTK Query for new endpoints.
+3. **Router** imports a thin entry (e.g. `HomePage.tsx` re-exporting the main container).
+4. **Register** new `createApi` slices in `src/state/store.ts` (reducer + middleware).
+
+Do **not** put large screen logic in a single flat `pages/SomePage.tsx` without the module layout above. See `packages/hr-admin/docs/page-module-patterns.md` and the `src/pages/home/` example.

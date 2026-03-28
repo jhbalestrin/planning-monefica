@@ -1,9 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { healthApi } from '../pages/home/api/healthApi';
 
 export const store = configureStore({
   reducer: {
-    // Add feature slices as the app grows
+    [healthApi.reducerPath]: healthApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(healthApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

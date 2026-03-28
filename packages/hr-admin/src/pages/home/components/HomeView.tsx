@@ -1,37 +1,14 @@
 import { Alert, Box, Button, CircularProgress, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { HealthResponseDto } from '@planning-monefica/shared-types';
-import { fetchHealth } from '../services/api';
 
-export function HomePage() {
-  const [health, setHealth] = useState<HealthResponseDto | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+export type HomeViewProps = {
+  loading: boolean;
+  errorMessage: string | null;
+  health: HealthResponseDto | null;
+};
 
-  useEffect(() => {
-    let cancelled = false;
-    fetchHealth()
-      .then((data) => {
-        if (!cancelled) {
-          setHealth(data);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setError('Could not reach API. Is the server running on port 5555?');
-        }
-      })
-      .finally(() => {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+export function HomeView({ loading, errorMessage, health }: HomeViewProps) {
   return (
     <Box sx={{ p: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -44,9 +21,9 @@ export function HomePage() {
         </Button>
       </Typography>
       {loading && <CircularProgress size={24} />}
-      {error && (
+      {errorMessage && (
         <Alert severity="warning" sx={{ mt: 2 }}>
-          {error}
+          {errorMessage}
         </Alert>
       )}
       {health && (
