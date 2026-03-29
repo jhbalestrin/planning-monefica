@@ -26,3 +26,31 @@ npm run start -w @planning-monefica/control-pane # UI :3001, /api proxied to API
 - Contributor setup: [CONTRIBUTING.md](CONTRIBUTING.md)
 
 **Stack:** Node 22+, Nest 11, Mongoose 8, Vite 8, React 19, MUI 7, Expo (SDK in `packages/ic-app`).
+
+## Docker (Mongo + API + all web UIs)
+
+Requires [Docker Compose](https://docs.docker.com/compose/) v2.
+
+```bash
+docker compose up --build
+```
+
+| Service | URL |
+|---------|-----|
+| MongoDB | `mongodb://localhost:27017` (DB `planning-monefica`) |
+| API | http://localhost:5555 (e.g. `/api/v1/health`) |
+| HR Admin | http://localhost:3000 |
+| Control pane | http://localhost:3001 |
+| IC app (static web export) | http://localhost:3002 |
+
+Each web container serves the SPA and **proxies `/api` to the API** (same idea as Vite dev server). Set `JWT_SECRET` (and optional auth-related vars) via environment when starting Compose, e.g. `JWT_SECRET=mysecret docker compose up --build`.
+
+For **ic-app** data in the container build, pass tenant and dev token at **build** time (Expo bakes `EXPO_PUBLIC_*` into the bundle):
+
+```bash
+EXPO_PUBLIC_TENANT_ID='<24-hex-mongo-id>' \
+EXPO_PUBLIC_DEV_ACCESS_TOKEN='<jwt>' \
+docker compose build ic-app && docker compose up
+```
+
+Optional env file: [docker/env.example](docker/env.example).

@@ -1,0 +1,78 @@
+# Local full stack: MongoDB + Nest API + static web UIs (nginx proxies /api → api).
+#
+# Usage:
+#   docker compose up --build
+#
+# URLs (host):
+#   API:          http://localhost:5555/api/v1/health
+#   HR Admin:     http://localhost:3000
+#   Control pane: http://localhost:3001
+#   IC (web):     http://localhost:3002
+#
+# ic-app needs EXPO_PUBLIC_TENANT_ID + EXPO_PUBLIC_DEV_ACCESS_TOKEN at build time;
+# override with compose build args (see ic-app service) then rebuild.
+
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', 'db.adminCommand({ ping: 1 }).ok']
+      interval: 5s
+      timeout: 5s
+      retries: 8
+      start_period: 15s
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/server.Dockerfile
+    ports:
+      - '5555:5555'
+    environment:
+      PORT: '5555'
+      ENV: development
+      MONGODB_URL: mongodb://mongo:27017/planning-monefica
+      JWT_SECRET: ${JWT_SECRET:-docker-dev-change-me}
+      JWT_ACCESS_TTL_SEC: ${JWT_ACCESS_TTL_SEC:-900}
+      JWT_REFRESH_TTL_SEC: ${JWT_REFRESH_TTL_SEC:-2592000}
+      BCRYPT_ROUNDS: ${BCRYPT_ROUNDS:-10}
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  hr-admin:
+    build:
+      context: .
+      dockerfile: docker/hr-admin.Dockerfile
+    ports:
+      - '3000:80'
+    depends_on:
+      - api
+
+  control-pane:
+    build:
+      context: .
+      dockerfile: docker/control-pane.Dockerfile
+    ports:
+      - '3001:80'
+    depends_on:
+      - api
+
+  ic-app:
+    build:
+      context: .
+      dockerfile: docker/ic-app.Dockerfile
+      args:
+        EXPO_PUBLIC_TENANT_ID: ${EXPO_PUBLIC_TENANT_ID:-}
+        EXPO_PUBLIC_DEV_ACCESS_TOKEN: ${EXPO_PUBLIC_DEV_ACCESS_TOKEN:-}
+    ports:
+      - '3002:80'
+    depends_on:
+      - api
+
+volumes:
+  mongo_data:

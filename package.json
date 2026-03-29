@@ -11,6 +11,8 @@
   ],
   "scripts": {
     "install:deps": "PUPPETEER_SKIP_DOWNLOAD=1 npm install",
+    "docker:up": "docker compose up --build",
+    "docker:build": "docker compose build",
     "build": "npm run build -w @planning-monefica/shared-types && npm run build -w @planning-monefica/server && npm run build -w @planning-monefica/hr-admin && npm run build -w @planning-monefica/control-pane",
     "build:shared-types": "npm run build -w @planning-monefica/shared-types",
     "test": "npm run test --workspaces --if-present",
