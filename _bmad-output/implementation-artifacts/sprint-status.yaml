@@ -1,0 +1,108 @@
+# generated: 2026-03-29T15:49:32Z
+# last_updated: 2026-03-29T15:49:32Z
+# project: planning-monefica
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: {project-root}/_bmad-output/implementation-artifacts
+#
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: "2026-03-29T15:49:32Z"
+last_updated: "2026-03-29T15:49:32Z"
+project: planning-monefica
+project_key: NOKEY
+tracking_system: file-system
+story_location: "{project-root}/_bmad-output/implementation-artifacts"
+
+development_status:
+  epic-1: backlog
+  1-1-sign-in-and-wrong-app-rejection: backlog
+  1-2-block-disabled-and-archived-users: backlog
+  1-3-initial-password-for-new-tenant-accounts: backlog
+  1-4-change-password-while-signed-in: backlog
+  1-5-forgot-password-and-reset-flow: backlog
+  1-6-logout-and-session-expiry: backlog
+  1-7-rate-limit-failed-sign-in: backlog
+  1-8-log-security-relevant-auth-events: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-tamper-evident-auth-context-for-clients: backlog
+  2-2-enforce-collaborator-data-scope: backlog
+  2-3-enforce-hr-admin-scope: backlog
+  2-4-enforce-platform-admin-isolation-from-tenant-roles: backlog
+  2-5-hr-admin-activates-and-deactivates-tenant-users: backlog
+  2-6-platform-admin-manages-operator-accounts: backlog
+  2-7-add-planning-consultant-role-and-control-pane-access: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-persist-eligibility-per-tenant-employee: backlog
+  3-2-hr-views-eligible-employee-list: backlog
+  3-3-hr-marks-an-employee-eligible: backlog
+  3-4-hr-removes-eligibility-with-confirmation: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-employee-eligibility-self-status-api: backlog
+  4-2-benefit-route-guard-and-safe-errors: backlog
+  4-3-protect-eligibility-admin-endpoints: backlog
+  4-4-ic-app-benefit-status-screen: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-scheduling-domain-models-and-module: backlog
+  5-2-consultant-availability-crud-api: backlog
+  5-3-derive-slot-list-with-double-book-prevention: backlog
+  5-4-consultant-calendar-view-in-control-pane: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-list-bookable-slots-for-eligible-employees: backlog
+  6-2-create-booking-with-atomic-reservation: backlog
+  6-3-list-and-detail-own-bookings: backlog
+  6-4-cancel-booking-per-policy: backlog
+  6-5-reschedule-without-double-reservation: backlog
+  6-6-enforce-hr-admin-out-of-consultant-scheduling-apis: backlog
+  epic-6-retrospective: optional
+
+  epic-7: backlog
+  7-1-queue-of-unassigned-bookings: backlog
+  7-2-assign-booking-to-self: backlog
+  7-3-complete-cancel-or-no-show-with-reason: backlog
+  7-4-platform-admin-override: backlog
+  epic-7-retrospective: optional
+
+  epic-8: backlog
+  8-1-mui-theme-tokens-for-new-surfaces: backlog
+  8-2-cross-platform-status-chip-badge: backlog
+  8-3-accessibility-baselines-for-web-modals-and-motion: backlog
+  8-4-ic-app-spacing-and-typography-constants: backlog
+  epic-8-retrospective: optional
