@@ -5,6 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthAuditService } from './auth-audit.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { RequireClientGuard } from './guards/require-client.guard';
+import { RequirePlatformPrincipalGuard } from './guards/require-platform-principal.guard';
+import { RequireRolesGuard } from './guards/require-roles.guard';
+import { RequireTenantPrincipalGuard } from './guards/require-tenant-principal.guard';
+import { TenantIdParamGuard } from './guards/tenant-id-param.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { InviteToken, InviteTokenSchema } from './schemas/invite-token.schema';
 import {
@@ -44,7 +49,26 @@ import { TenantUser, TenantUserSchema } from './schemas/tenant-user.schema';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthAuditService, JwtAuthGuard],
-  exports: [AuthService, JwtAuthGuard, JwtModule],
+  providers: [
+    AuthService,
+    AuthAuditService,
+    JwtAuthGuard,
+    RequireClientGuard,
+    RequireRolesGuard,
+    RequireTenantPrincipalGuard,
+    RequirePlatformPrincipalGuard,
+    TenantIdParamGuard,
+  ],
+  exports: [
+    AuthService,
+    JwtAuthGuard,
+    JwtModule,
+    MongooseModule,
+    RequireClientGuard,
+    RequireRolesGuard,
+    RequireTenantPrincipalGuard,
+    RequirePlatformPrincipalGuard,
+    TenantIdParamGuard,
+  ],
 })
 export class AuthModule {}

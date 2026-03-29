@@ -7,7 +7,7 @@ frs: [AUTH-FR13, AUTH-FR16]
 
 # Story 2.2: Enforce collaborator data scope
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,9 +23,9 @@ so that **I never see another company’s data**.
 
 ## Tasks / Subtasks
 
-- [ ] Nest **guard** or interceptor: `role === collaborator` + `request.tenantId === jwt.tenantId`.
-- [ ] Apply to IC-scoped route prefix (define constant e.g. `/api/ic/...` or per-module).
-- [ ] Integration tests: tenant A user cannot read tenant B resource id.
+- [x] Nest **guard** or interceptor: `role === collaborator` + `request.tenantId === jwt.tenantId`.
+- [x] Apply to IC-scoped route prefix (define constant e.g. `/api/ic/...` or per-module).
+- [x] Integration tests: tenant A user cannot read tenant B resource id.
 
 ## Dev Notes
 
@@ -39,8 +39,28 @@ so that **I never see another company’s data**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `IcModule`: `GET /api/v1/ic/tenants/:tenantId/ping` with `JwtAuthGuard`, `RequireTenantPrincipalGuard`, `RequireClientGuard` (`ic-app`), `RequireRolesGuard` (`collaborator`), `TenantIdParamGuard`.
+- `rbac.guards.spec.ts` — wrong `aud`, wrong role, tenant path ≠ JWT.
+
 ### File List
+
+- packages/shared-types/src/auth.ts (`FORBIDDEN`, `TENANT_MISMATCH`, `WRONG_CLIENT_FOR_ROUTE`, `WRONG_PRINCIPAL_TYPE`)
+- packages/server/src/ic/ic.module.ts
+- packages/server/src/ic/ic.controller.ts
+- packages/server/src/auth/auth.module.ts
+- packages/server/src/auth/rbac.constants.ts
+- packages/server/src/auth/guards/require-client.guard.ts
+- packages/server/src/auth/guards/require-roles.guard.ts
+- packages/server/src/auth/guards/require-tenant-principal.guard.ts
+- packages/server/src/auth/guards/tenant-id-param.guard.ts
+- packages/server/src/auth/decorators/rbac.decorator.ts
+- packages/server/src/auth/decorators/current-user.decorator.ts
+- packages/server/src/app.module.ts

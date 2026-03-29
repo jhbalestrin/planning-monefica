@@ -7,7 +7,7 @@ frs: [AUTH-FR12]
 
 # Story 2.1: Tamper-evident auth context for clients
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -21,10 +21,10 @@ so that **the UI can render but the server remains authoritative**.
 
 ## Tasks / Subtasks
 
-- [ ] Audit access JWT payload vs shared-types (roles, `tenantId`, `aud`/`client_id`, `principalType`, optional `serveAllTenants`/`tenantScope` for consultants per **AD-SCHED-001**).
-- [ ] Expose a typed **session/user DTO** for clients (from token decode or `/me` if added).
-- [ ] Document claim contract in server README or OpenAPI.
-- [ ] Tests: issued token verifies with server secret; payload matches expected shape.
+- [x] Audit access JWT payload vs shared-types (roles, `tenantId`, `aud`/`client_id`, `principalType`, optional `serveAllTenants`/`tenantScope` for consultants per **AD-SCHED-001**).
+- [x] Expose a typed **session/user DTO** for clients (from token decode or `/me` if added).
+- [x] Document claim contract in server README or OpenAPI.
+- [x] Tests: issued token verifies with server secret; payload matches expected shape.
 
 ## Dev Notes
 
@@ -39,8 +39,20 @@ so that **the UI can render but the server remains authoritative**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- Confirmed `AccessTokenPayload` / `AuthMeResponseDto` alignment; `GET /api/v1/auth/me` unchanged shape.
+- `packages/server/docs/auth.md` — JWT claim table + AD-SCHED-001 fields.
+- `jwt-claims.spec.ts` — sign/verify round-trip for tenant + consultant payloads.
+
 ### File List
+
+- packages/server/docs/auth.md
+- packages/server/src/auth/jwt-claims.spec.ts
+- packages/shared-types/src/auth.ts (403 codes added in Epic 2 for guards; claims unchanged)

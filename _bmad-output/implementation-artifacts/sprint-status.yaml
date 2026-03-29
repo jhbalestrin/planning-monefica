@@ -1,5 +1,5 @@
 # generated: 2026-03-29T15:49:32Z
-# last_updated: 2026-03-29T12:00:00Z
+# last_updated: 2026-03-29T20:00:00Z
 # project: planning-monefica
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: "2026-03-29T15:49:32Z"
-last_updated: "2026-03-29T12:00:00Z"
+last_updated: "2026-03-29T20:00:00Z"
 project: planning-monefica
 project_key: NOKEY
 tracking_system: file-system
@@ -53,14 +53,14 @@ development_status:
   1-8-log-security-relevant-auth-events: done
   epic-1-retrospective: optional
 
-  epic-2: backlog
-  2-1-tamper-evident-auth-context-for-clients: ready-for-dev
-  2-2-enforce-collaborator-data-scope: ready-for-dev
-  2-3-enforce-hr-admin-scope: ready-for-dev
-  2-4-enforce-platform-admin-isolation-from-tenant-roles: ready-for-dev
-  2-5-hr-admin-activates-and-deactivates-tenant-users: ready-for-dev
-  2-6-platform-admin-manages-operator-accounts: ready-for-dev
-  2-7-add-planning-consultant-role-and-control-pane-access: ready-for-dev
+  epic-2: done
+  2-1-tamper-evident-auth-context-for-clients: done
+  2-2-enforce-collaborator-data-scope: done
+  2-3-enforce-hr-admin-scope: done
+  2-4-enforce-platform-admin-isolation-from-tenant-roles: done
+  2-5-hr-admin-activates-and-deactivates-tenant-users: done
+  2-6-platform-admin-manages-operator-accounts: done
+  2-7-add-planning-consultant-role-and-control-pane-access: done
   epic-2-retrospective: optional
 
   epic-3: backlog

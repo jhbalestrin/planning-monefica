@@ -7,7 +7,7 @@ frs: [AUTH-FR14, AUTH-FR16]
 
 # Story 2.3: Enforce HR admin scope
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,9 +22,9 @@ so that **I cannot manage another customer’s org**.
 
 ## Tasks / Subtasks
 
-- [ ] Guard: `hr_admin` + JWT `tenantId` bound to all mutations/queries.
-- [ ] Apply to HR admin API surface (eligibility admin, user list, etc.).
-- [ ] Tests: hr_admin A cannot hit tenant B ids.
+- [x] Guard: `hr_admin` + JWT `tenantId` bound to all mutations/queries.
+- [x] Apply to HR admin API surface (eligibility admin, user list, etc.).
+- [x] Tests: hr_admin A cannot hit tenant B ids.
 
 ### References
 
@@ -34,8 +34,20 @@ so that **I cannot manage another customer’s org**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `HrModule`: `PATCH .../hr/tenants/:tenantId/users/:userId/active` — same guard stack as IC with `aud: hr-admin`, `hr_admin`, `TenantIdParamGuard`.
+
 ### File List
+
+- packages/server/src/hr/hr.module.ts
+- packages/server/src/hr/hr.controller.ts
+- packages/server/src/hr/hr.service.ts
+- packages/server/src/hr/hr.service.spec.ts
+- packages/server/src/hr/dto/patch-tenant-user-active.dto.ts

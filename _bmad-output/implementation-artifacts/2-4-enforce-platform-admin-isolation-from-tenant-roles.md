@@ -7,7 +7,7 @@ frs: [AUTH-FR15, AUTH-FR16]
 
 # Story 2.4: Enforce platform admin isolation from tenant roles
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,9 +22,9 @@ so that **internal ops cannot accidentally act as a customer HR user**.
 
 ## Tasks / Subtasks
 
-- [ ] Separate route groups: `PlatformGuard` vs `TenantHrGuard` vs `CollaboratorGuard`.
-- [ ] Deny `platform_admin` on tenant-scoped HR/IC mutations unless explicit future impersonation (out of scope).
-- [ ] Tests: platform token 403 on representative tenant HR route.
+- [x] Separate route groups: `PlatformGuard` vs `TenantHrGuard` vs `CollaboratorGuard`.
+- [x] Deny `platform_admin` on tenant-scoped HR/IC mutations unless explicit future impersonation (out of scope).
+- [x] Tests: platform token 403 on representative tenant HR route.
 
 ### References
 
@@ -34,8 +34,20 @@ so that **internal ops cannot accidentally act as a customer HR user**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- Tenant routes use `RequireTenantPrincipalGuard` → `403 WRONG_PRINCIPAL_TYPE` for `platform_user`.
+- Platform routes use `RequirePlatformPrincipalGuard`.
+- `rbac.guards.spec.ts` covers platform user rejected on tenant-style handler context.
+
 ### File List
+
+- packages/server/src/auth/guards/require-platform-principal.guard.ts
+- packages/server/src/auth/guards/require-tenant-principal.guard.ts
+- packages/server/src/auth/guards/rbac.guards.spec.ts

@@ -7,7 +7,7 @@ frs: []
 
 # Story 2.7: Add planning_consultant role and control-pane access
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,9 +23,9 @@ so that **I never use customer HR or employee apps for my job**.
 
 ## Tasks / Subtasks
 
-- [ ] Add role literal to **shared-types** + JWT claims.
-- [ ] Extend client matrix checks (login + guards) for scheduling routes prefix.
-- [ ] Seed or document creating first `planning_consultant` user.
+- [x] Add role literal to **shared-types** + JWT claims.
+- [x] Extend client matrix checks (login + guards) for scheduling routes prefix.
+- [x] Seed or document creating first `planning_consultant` user.
 
 ### References
 
@@ -36,8 +36,20 @@ so that **I never use customer HR or employee apps for my job**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `planning_consultant` already in shared-types + login matrix (Epic 1).
+- `SchedulingModule`: `GET /api/v1/scheduling/consultant/ping` — `RequireRoles('planning_consultant')` only (excludes `platform_admin`).
+- docs: first consultant via `POST /api/v1/platform/users`.
+
 ### File List
+
+- packages/server/src/scheduling/scheduling.module.ts
+- packages/server/src/scheduling/scheduling-consultant.controller.ts
+- packages/server/docs/auth.md

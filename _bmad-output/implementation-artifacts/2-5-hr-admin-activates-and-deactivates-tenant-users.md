@@ -7,7 +7,7 @@ frs: [AUTH-FR19]
 
 # Story 2.5: HR admin activates and deactivates tenant users
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,9 +22,9 @@ so that **leavers lose access**.
 
 ## Tasks / Subtasks
 
-- [ ] API: `PATCH` user active flag on **tenant User** (same tenant as JWT only).
-- [ ] Wire to existing auth checks from Story 1.2.
-- [ ] Optional: minimal hr-admin UI in this story or note defer to Epic 3 if split.
+- [x] API: `PATCH` user active flag on **tenant User** (same tenant as JWT only).
+- [x] Wire to existing auth checks from Story 1.2.
+- [x] Optional: minimal hr-admin UI in this story or note defer to Epic 3 if split.
 
 ### References
 
@@ -34,8 +34,19 @@ so that **leavers lose access**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `HrService.setTenantUserActive` — query by `_id` + `tenantId`; `revokeAllRefreshForUser` when `active: false`.
+- UI deferred to Epic 3; API-only.
+
 ### File List
+
+- packages/server/src/hr/hr.service.ts
+- packages/server/src/hr/hr.service.spec.ts
+- packages/server/src/hr/hr.controller.ts

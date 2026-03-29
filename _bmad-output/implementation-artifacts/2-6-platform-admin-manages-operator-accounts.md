@@ -7,7 +7,7 @@ frs: [AUTH-FR20]
 
 # Story 2.6: Platform admin manages operator accounts
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -21,9 +21,9 @@ so that **internal access is provisioned safely**.
 
 ## Tasks / Subtasks
 
-- [ ] CRUD (create/disable) APIs on **`PlatformUser`** collection only; guard with `platform_admin`.
-- [ ] Hash passwords; assign roles (`platform_admin`, `planning_consultant`, …).
-- [ ] Optional: minimal control-pane admin UI or API-only + seed docs.
+- [x] CRUD (create/disable) APIs on **`PlatformUser`** collection only; guard with `platform_admin`.
+- [x] Hash passwords; assign roles (`platform_admin`, `planning_consultant`, …).
+- [x] Optional: minimal control-pane admin UI or API-only + seed docs.
 
 ### References
 
@@ -33,8 +33,21 @@ so that **internal access is provisioned safely**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `PlatformOperatorsModule`: `POST /api/v1/platform/users`, `PATCH .../:userId/active`; bcrypt; `serveAllTenants` / `tenantIds` on create; refresh revoked on disable.
+
 ### File List
+
+- packages/server/src/platform-operators/platform-operators.module.ts
+- packages/server/src/platform-operators/platform-operators.controller.ts
+- packages/server/src/platform-operators/platform-operators.service.ts
+- packages/server/src/platform-operators/platform-operators.service.spec.ts
+- packages/server/src/platform-operators/dto/create-platform-user.dto.ts
+- packages/server/src/platform-operators/dto/patch-platform-user-active.dto.ts

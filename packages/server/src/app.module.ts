@@ -4,6 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { CorrelationIdMiddleware } from './common/correlation-id.middleware';
 import { HealthModule } from './health/health.module';
+import { HrModule } from './hr/hr.module';
+import { IcModule } from './ic/ic.module';
+import { PlatformOperatorsModule } from './platform-operators/platform-operators.module';
+import { SchedulingModule } from './scheduling/scheduling.module';
 
 @Module({
   imports: [
@@ -19,6 +23,10 @@ import { HealthModule } from './health/health.module';
     }),
     HealthModule,
     AuthModule,
+    IcModule,
+    HrModule,
+    PlatformOperatorsModule,
+    SchedulingModule,
   ],
 })
 export class AppModule implements NestModule {
