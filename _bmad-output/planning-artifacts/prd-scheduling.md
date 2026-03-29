@@ -248,7 +248,7 @@ Eligible **employees** (see **eligibility PRD**) need to **schedule** personal f
 ## Open Questions
 
 1. **Slot length & buffers:** Fixed **60m** vs configurable; padding between sessions.
-2. **Consultant ↔ tenant access:** Do all in-house consultants serve **all** tenants, or **assigned coverage** per tenant?
+2. **Consultant ↔ tenant access — RESOLVED (architecture):** **Both** modes supported. **MVP default:** `PlatformUser.serveAllTenants: true` → consultant sees **all** tenants. **Restricted:** `serveAllTenants: false` + non-empty **`tenantIds`** → **assigned coverage** only. JWT mirrors for UI; **server enforces `PlatformUser`** (see `_bmad-output/planning-artifacts/architecture.md` **AD-SCHED-001**).
 3. **Assignment UX:** Is **self-claim** sufficient for MVP, or is **manager dispatch** required day one?
 4. **Confirmation:** Is employee booking **instantly confirmed**, or **pending consultant approval**?
 5. **Notifications:** Push only, email only, or both; provider choice.

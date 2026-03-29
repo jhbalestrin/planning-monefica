@@ -215,7 +215,7 @@ No novel technology claim for this slice; value is **operational** and **trust**
 
 ### Consistency & propagation
 
-- **NFR4:** After eligibility **revocation**, benefit access must **cease** no later than **[TBD: e.g. session TTL or next API call]**—document chosen strategy in architecture (align with auth token model open question).
+- **NFR4:** After eligibility **revocation**, benefit access must **cease** no later than the **next protected benefit/scheduling API call** that re-checks eligibility (and **active user**) on the server, or—if a short-lived server cache is used—within that cache TTL. **Do not** rely on eligibility embedded only in a long-lived JWT. See `architecture.md` **AD-AUTH-001** (JWT access TTL bounds worst-case delay when no cache).
 
 ### Usability (HR admin)
 

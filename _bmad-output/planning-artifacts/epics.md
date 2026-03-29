@@ -75,7 +75,7 @@ This document decomposes **planning-monefica** into epics and stories. **Functio
 - **SCHED-FR6:** Collaborator lists own bookings + status.
 - **SCHED-FR7:** Collaborator cancels own booking per policy.
 - **SCHED-FR8:** Collaborator reschedules per policy (no double reservation).
-- **SCHED-FR9:** Consultant views bookings awaiting assignment (tenant scope per product rule).
+- **SCHED-FR9:** Consultant views bookings awaiting assignment (tenant filter per **`PlatformUser`** — **AD-SCHED-001** in `architecture.md`).
 - **SCHED-FR10:** Consultant assigns unassigned booking to self.
 - **SCHED-FR11:** Consultant marks completed / cancelled / no-show with reason.
 - **SCHED-FR12 (optional):** platform_admin reassigns/cancels any booking with audit.
@@ -97,7 +97,7 @@ This document decomposes **planning-monefica** into epics and stories. **Functio
 
 - **Brownfield:** Extend existing Nest monorepo; **no** new repo starter (`architecture.md`).
 - **New Nest modules:** `eligibility`, `scheduling` (or equivalent names) with owned Mongoose schemas; cross-module calls via **public services** only.
-- **Auth extension:** `planning_consultant` platform role; **control-pane** scheduling surfaces; amend JWT/session claims per chosen token model.
+- **Auth extension:** `planning_consultant` platform role; **control-pane** scheduling surfaces; amend **access JWT** claims per **AD-AUTH-001** (`architecture.md`).
 - **Booking concurrency:** Atomic reservation or transaction per `architecture.md` (SCHED-NFR1).
 - **API errors:** Stable machine-readable `code` + localized messages; **pt-BR** on ic-app (`architecture.md`, UX spec).
 - **Dates:** UTC storage; **date-fns** in apps (`project-context.md`).

@@ -33,7 +33,7 @@ Dense context for PRD/epic work. Prefer the executive brief for stakeholder narr
 - **Stack:** NestJS 11 API + MongoDB; **shared-types** for contracts; clients: **ic-app** (Expo/RN), **hr-admin** (Vite/React/MUI), **control-pane** (Vite/React/MUI); **tenant isolation** for customer users; **platform roles** separate from tenant HR/employee.
 - **Filed PRDs** (same folder as this distillate): `prd-login-authorization-access.md` (auth); `prd-eligibility.md` (HR eligibility + benefit gate); `prd-scheduling.md` (availability, employee booking, consultant assignment; introduces **`planning_consultant`** for control-pane—auth matrix extension).
 - **Auth PRD** covers **authn/z, roles, app access matrix, passwords, sessions**—**FR1–FR20**; it does **not** define scheduling, billing, or eligibility UX—see linked PRDs above.
-- **Open questions from auth PRD** (carry forward): sign-in identifier (email/username/scope); **who creates employee accounts** (HR, bulk, invite); password policy; platform user storage model; JWT vs server session; hr_admin on mobile (MVP denied).
+- **Open questions from auth PRD** (carry forward): sign-in identifier (email/username/scope); **who creates employee accounts** (HR, bulk, invite); password policy; hr_admin on mobile (MVP denied). **Closed:** Token model **AD-AUTH-001**; platform user storage **AD-AUTH-002** (`PlatformUser` collection).
 
 ## Requirements hints (for future PRDs)
 

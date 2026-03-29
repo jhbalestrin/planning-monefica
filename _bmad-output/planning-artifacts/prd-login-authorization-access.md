@@ -224,8 +224,8 @@ Roles are **strings (or enums in `shared-types`)** assigned by the server and em
 1. **Identifier:** Sign-in with **email only**, **username only**, or **either**? Must be unique **globally** or **per tenant**?
 2. **IC onboarding:** Who creates collaborator accounts — **HR admin**, **bulk import**, **invite email**?
 3. **Password policy:** Minimum length, complexity, rotation, and lockout thresholds (legal/HR may dictate).
-4. **Platform user storage:** Same `User` collection with a flag vs separate `PlatformUser` model — preference for audit and blast radius.
-5. **Token model:** Stateless JWT only vs opaque server sessions + refresh tokens — impacts FR9/F11 and logout behavior.
+4. **Platform user storage — RESOLVED (architecture):** **Option B — separate `PlatformUser` collection** (not tenant `User` + flag). **control-pane** auth resolves **`PlatformUser`** only; tenant apps resolve **tenant `User`** only. JWT `sub` + **`principalType`** (or equivalent) must disambiguate collection on load. See `_bmad-output/planning-artifacts/architecture.md` — **AD-AUTH-002**.
+5. **Token model — RESOLVED (architecture):** **Bearer access JWT** (short TTL) + **server-stored refresh** (opaque, hashed, rotatable). Logout/password change revoke refresh; access expires naturally (optional denylist). See `_bmad-output/planning-artifacts/architecture.md` — **AD-AUTH-001**. Impacts FR9–FR11 as documented there.
 6. **hr_admin on ic-app:** Confirm **never** for MVP vs future “HR mobile” scenario.
 
 ---
