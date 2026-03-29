@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from '../auth/auth.module';
+import { BenefitEligibilityGuard } from './benefit-eligibility.guard';
 import { EligibilityController } from './eligibility.controller';
 import { EligibilityService } from './eligibility.service';
 import { EmployeeEligibility, EmployeeEligibilitySchema } from './schemas/employee-eligibility.schema';
@@ -21,7 +22,7 @@ import {
     ]),
   ],
   controllers: [EligibilityController],
-  providers: [EligibilityService],
-  exports: [EligibilityService],
+  providers: [EligibilityService, BenefitEligibilityGuard],
+  exports: [EligibilityService, BenefitEligibilityGuard],
 })
 export class EligibilityModule {}

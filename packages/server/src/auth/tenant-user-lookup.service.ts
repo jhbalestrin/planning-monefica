@@ -1,9 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import type { AuthRole } from '@planning-monefica/shared-types';
 import { Model, Types } from 'mongoose';
 import { TenantUser } from './schemas/tenant-user.schema';
 
 export type TenantUserSummary = { id: string; email: string };
+
+export type TenantUserBenefitSnapshot = {
+  active: boolean;
+  passwordSetRequired: boolean;
+  isCollaborator: boolean;
+};
 
 @Injectable()
 export class TenantUserLookupService {
@@ -46,6 +53,25 @@ export class TenantUserLookupService {
       id: (d._id as Types.ObjectId).toString(),
       email: d.email,
     }));
+  }
+
+  async getTenantUserBenefitSnapshot(
+    tenantId: Types.ObjectId,
+    userId: Types.ObjectId,
+  ): Promise<TenantUserBenefitSnapshot | null> {
+    const doc = await this.tenantUserModel
+      .findOne({ _id: userId, tenantId })
+      .lean()
+      .exec();
+    if (!doc) {
+      return null;
+    }
+    const roles = doc.roles as AuthRole[];
+    return {
+      active: Boolean(doc.active),
+      passwordSetRequired: Boolean(doc.passwordSetRequired),
+      isCollaborator: roles.includes('collaborator'),
+    };
   }
 
   async getSummariesForUsers(

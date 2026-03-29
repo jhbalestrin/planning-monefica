@@ -7,7 +7,7 @@ frs: [ELIG-FR9, ELIG-FR12]
 
 # Story 4.3: Protect eligibility admin endpoints
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,8 +22,8 @@ so that **employees cannot self-sponsor**.
 
 ## Tasks / Subtasks
 
-- [ ] Apply `hr_admin` + tenant guard to all ELIG mutating routes from Epic 3.
-- [ ] Tests: collaborator 403 on POST/PATCH eligibility admin.
+- [x] Apply `hr_admin` + tenant guard to all ELIG mutating routes from Epic 3.
+- [x] Tests: collaborator 403 on POST/PATCH eligibility admin.
 
 ### References
 
@@ -33,8 +33,18 @@ so that **employees cannot self-sponsor**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- Epic 3 `EligibilityController` already `hr-admin` + `hr_admin` + `TenantIdParamGuard` (ELIG-FR12).
+- `eligibility-admin-access.spec.ts`: ic-app collaborator fails `RequireClientGuard`; collaborator + `hr-admin` fails `RequireRolesGuard`.
+
 ### File List
+
+- packages/server/src/eligibility/eligibility.controller.ts
+- packages/server/src/eligibility/eligibility-admin-access.spec.ts

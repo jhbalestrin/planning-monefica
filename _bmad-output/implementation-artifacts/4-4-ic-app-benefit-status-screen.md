@@ -8,7 +8,7 @@ ux: [UX-DR1, UX-DR5, UX-DR6]
 
 # Story 4.4: ic-app benefit status screen
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -24,8 +24,8 @@ so that **I immediately know if I can plan**.
 
 ## Tasks / Subtasks
 
-- [ ] ic-app screen consuming Story 4.1 API.
-- [ ] Map error codes to pt-BR strings (**UX-DR2** alignment).
+- [x] ic-app screen consuming Story 4.1 API.
+- [x] Map error codes to pt-BR strings (**UX-DR2** alignment).
 
 ### References
 
@@ -35,8 +35,23 @@ so that **I immediately know if I can plan**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- Home `BenefitStatusCard`: RTK `eligibilitySelfApi`, status chip + pt-BR body copy (UX-DR1/DR5/DR6); `benefitPtBr.ts` maps `BenefitErrorCodes`.
+- Env: `EXPO_PUBLIC_API_BASE_URL`, `EXPO_PUBLIC_TENANT_ID`, `EXPO_PUBLIC_DEV_ACCESS_TOKEN` (see `ENV_SETUP.md`).
+
 ### File List
+
+- packages/ic-app/App.tsx
+- packages/ic-app/package.json
+- packages/ic-app/src/api/eligibilitySelfApi.ts
+- packages/ic-app/src/components/BenefitStatusCard.tsx
+- packages/ic-app/src/i18n/benefitPtBr.ts
+- packages/ic-app/src/state/store.ts
+- packages/ic-app/ENV_SETUP.md

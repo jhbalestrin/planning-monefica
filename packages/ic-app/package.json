@@ -11,6 +11,7 @@
     "test": "node -e \"console.log('Add tests when ready'); process.exit(0)\""
   },
   "dependencies": {
+    "@planning-monefica/shared-types": "file:../shared-types",
     "@reduxjs/toolkit": "^2.5.1",
     "date-fns": "^4.1.0",
     "expo": "55.0.10-canary-20260327-0789fbc",
@@ -20,7 +21,6 @@
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
-    "@planning-monefica/shared-types": "file:../shared-types",
     "@types/react": "~19.2.2",
     "typescript": "~5.9.2"
   },

@@ -8,7 +8,7 @@ ux: [UX-DR1]
 
 # Story 4.1: Employee eligibility self-status API
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,8 +22,8 @@ so that **the app can show whether I have the benefit**.
 
 ## Tasks / Subtasks
 
-- [ ] `GET /api/.../eligibility/me` (or equivalent); guard collaborator + tenant.
-- [ ] Map persistence to DTO in **shared-types**.
+- [x] `GET /api/.../eligibility/me` (or equivalent); guard collaborator + tenant.
+- [x] Map persistence to DTO in **shared-types**.
 
 ### References
 
@@ -33,8 +33,22 @@ so that **the app can show whether I have the benefit**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `GET /api/v1/ic/tenants/:tenantId/me/eligibility` — JWT `sub` + `tenantId` only; `TenantIdParamGuard` binds path tenant to JWT.
+- `EligibilitySelfStatusDto` + `BenefitEligibilityStatus` in shared-types; `getTenantUserBenefitSnapshot` + eligibility row.
+
 ### File List
+
+- packages/shared-types/src/eligibility.ts
+- packages/server/src/auth/tenant-user-lookup.service.ts
+- packages/server/src/eligibility/eligibility.service.ts
+- packages/server/src/eligibility/eligibility.service.spec.ts
+- packages/server/src/ic/ic.controller.ts
+- packages/server/src/ic/ic.module.ts

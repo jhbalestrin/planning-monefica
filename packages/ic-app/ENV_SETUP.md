@@ -15,3 +15,9 @@
 
 - Set API base URL per build profile (EAS `eas.json` env, or CI-injected config).
 - Use HTTPS endpoints only.
+
+## Benefit status (Epic 4 dev)
+
+- `EXPO_PUBLIC_API_BASE_URL` — e.g. `http://10.0.2.2:5555` (Android emulator → host API).
+- `EXPO_PUBLIC_TENANT_ID` — Mongo ObjectId string matching the collaborator’s tenant.
+- `EXPO_PUBLIC_DEV_ACCESS_TOKEN` — short-lived **ic-app** JWT (never commit real tokens).

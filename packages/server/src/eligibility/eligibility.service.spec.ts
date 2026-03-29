@@ -1,4 +1,5 @@
-import { NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { BenefitErrorCodes } from '@planning-monefica/shared-types';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
@@ -17,6 +18,7 @@ describe('EligibilityService', () => {
   const assertCollab = jest.fn();
   const listSummaries = jest.fn();
   const getSummaries = jest.fn();
+  const getBenefitSnapshot = jest.fn();
 
   beforeEach(async () => {
     jest.clearAllMocks();
@@ -31,6 +33,7 @@ describe('EligibilityService', () => {
     assertCollab.mockResolvedValue(undefined);
     listSummaries.mockResolvedValue([]);
     getSummaries.mockResolvedValue(new Map());
+    getBenefitSnapshot.mockResolvedValue(null);
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -54,6 +57,7 @@ describe('EligibilityService', () => {
             assertCollaboratorInTenant: assertCollab,
             listCollaboratorSummaries: listSummaries,
             getSummariesForUsers: getSummaries,
+            getTenantUserBenefitSnapshot: getBenefitSnapshot,
           },
         },
       ],
@@ -111,6 +115,76 @@ describe('EligibilityService', () => {
     expect(createElig).toHaveBeenCalled();
     expect(createAudit).toHaveBeenCalledWith(
       expect.objectContaining({ action: 'marked_eligible' }),
+    );
+  });
+
+  it('getSelfEligibilityStatus returns eligible when row exists', async () => {
+    const tid = new Types.ObjectId();
+    const uid = new Types.ObjectId();
+    getBenefitSnapshot.mockResolvedValue({
+      active: true,
+      passwordSetRequired: false,
+      isCollaborator: true,
+    });
+    findOneElig.mockReturnValue({
+      lean: () => ({ exec: () => Promise.resolve({ _id: 'x' }) }),
+    });
+    const out = await service.getSelfEligibilityStatus({
+      sub: uid.toString(),
+      tenantId: tid.toString(),
+      aud: 'ic-app',
+      principalType: 'tenant_user',
+      roles: ['collaborator'],
+    });
+    expect(out.status).toBe('eligible');
+  });
+
+  it('getSelfEligibilityStatus returns pending when passwordSetRequired', async () => {
+    const tid = new Types.ObjectId();
+    const uid = new Types.ObjectId();
+    getBenefitSnapshot.mockResolvedValue({
+      active: true,
+      passwordSetRequired: true,
+      isCollaborator: true,
+    });
+    const out = await service.getSelfEligibilityStatus({
+      sub: uid.toString(),
+      tenantId: tid.toString(),
+      aud: 'ic-app',
+      principalType: 'tenant_user',
+      roles: ['collaborator'],
+    });
+    expect(out.status).toBe('pending');
+  });
+
+  it('assertBenefitAccessAllowed throws when not eligible', async () => {
+    const tid = new Types.ObjectId();
+    const uid = new Types.ObjectId();
+    getBenefitSnapshot.mockResolvedValue({
+      active: true,
+      passwordSetRequired: false,
+      isCollaborator: true,
+    });
+    findOneElig.mockReturnValue({
+      lean: () => ({ exec: () => Promise.resolve(null) }),
+    });
+    await expect(
+      service.assertBenefitAccessAllowed(tid, uid),
+    ).rejects.toMatchObject({
+      response: expect.objectContaining({ code: BenefitErrorCodes.NOT_ELIGIBLE }),
+    });
+  });
+
+  it('assertBenefitAccessAllowed throws ACCOUNT_INACTIVE', async () => {
+    const tid = new Types.ObjectId();
+    const uid = new Types.ObjectId();
+    getBenefitSnapshot.mockResolvedValue({
+      active: false,
+      passwordSetRequired: false,
+      isCollaborator: true,
+    });
+    await expect(service.assertBenefitAccessAllowed(tid, uid)).rejects.toThrow(
+      ForbiddenException,
     );
   });
 });

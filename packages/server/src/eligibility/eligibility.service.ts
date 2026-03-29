@@ -1,12 +1,20 @@
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type {
+  AccessTokenPayload,
   EligibilityCollaboratorOptionDto,
   EligibilityListItemDto,
+  EligibilitySelfStatusDto,
+} from '@planning-monefica/shared-types';
+import {
+  AuthErrorCodes,
+  BenefitErrorCodes,
 } from '@planning-monefica/shared-types';
 import { Model, Types } from 'mongoose';
 import { TenantUserLookupService } from '../auth/tenant-user-lookup.service';
@@ -25,6 +33,85 @@ export class EligibilityService {
     private auditModel: Model<EligibilityAuditEvent>,
     private readonly tenantUsers: TenantUserLookupService,
   ) {}
+
+  async getSelfEligibilityStatus(
+    user: AccessTokenPayload,
+  ): Promise<EligibilitySelfStatusDto> {
+    if (user.principalType !== 'tenant_user' || !user.tenantId) {
+      throw new UnauthorizedException({
+        message: 'Invalid session for this resource.',
+        code: AuthErrorCodes.UNAUTHORIZED,
+      });
+    }
+    const tenantId = new Types.ObjectId(user.tenantId);
+    const userId = new Types.ObjectId(user.sub);
+    const snap = await this.tenantUsers.getTenantUserBenefitSnapshot(
+      tenantId,
+      userId,
+    );
+    if (!snap) {
+      throw new UnauthorizedException({
+        message: 'User not found for tenant.',
+        code: AuthErrorCodes.UNAUTHORIZED,
+      });
+    }
+    if (!snap.isCollaborator) {
+      throw new ForbiddenException({
+        message: 'Only collaborators can view benefit status here.',
+        code: AuthErrorCodes.FORBIDDEN,
+      });
+    }
+    if (!snap.active) {
+      return { status: 'not_eligible' };
+    }
+    if (snap.passwordSetRequired) {
+      return { status: 'pending' };
+    }
+    const row = await this.eligModel
+      .findOne({ tenantId, userId })
+      .lean()
+      .exec();
+    return { status: row ? 'eligible' : 'not_eligible' };
+  }
+
+  /**
+   * Benefit-scoped routes (ELIG-FR10 order: after auth + tenant binding).
+   * ELIG-FR11: inactive never passes.
+   */
+  async assertBenefitAccessAllowed(
+    tenantId: Types.ObjectId,
+    userId: Types.ObjectId,
+  ): Promise<void> {
+    const snap = await this.tenantUsers.getTenantUserBenefitSnapshot(
+      tenantId,
+      userId,
+    );
+    if (!snap || !snap.isCollaborator) {
+      throw new ForbiddenException({
+        message: 'Benefit access denied.',
+        code: BenefitErrorCodes.NOT_ELIGIBLE,
+      });
+    }
+    if (!snap.active) {
+      throw new ForbiddenException({
+        message: 'Account is inactive.',
+        code: BenefitErrorCodes.ACCOUNT_INACTIVE,
+      });
+    }
+    if (snap.passwordSetRequired) {
+      throw new ForbiddenException({
+        message: 'Complete password setup before using benefits.',
+        code: BenefitErrorCodes.ONBOARDING_PENDING,
+      });
+    }
+    const row = await this.eligModel.findOne({ tenantId, userId }).lean().exec();
+    if (!row) {
+      throw new ForbiddenException({
+        message: 'You are not eligible for this benefit.',
+        code: BenefitErrorCodes.NOT_ELIGIBLE,
+      });
+    }
+  }
 
   private async writeAudit(
     tenantId: Types.ObjectId,

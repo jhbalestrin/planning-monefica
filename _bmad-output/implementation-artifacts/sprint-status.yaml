@@ -1,5 +1,5 @@
 # generated: 2026-03-29T15:49:32Z
-# last_updated: 2026-03-29T22:00:00Z
+# last_updated: 2026-03-29T23:30:00Z
 # project: planning-monefica
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: "2026-03-29T15:49:32Z"
-last_updated: "2026-03-29T22:00:00Z"
+last_updated: "2026-03-29T23:30:00Z"
 project: planning-monefica
 project_key: NOKEY
 tracking_system: file-system
@@ -70,11 +70,11 @@ development_status:
   3-4-hr-removes-eligibility-with-confirmation: done
   epic-3-retrospective: optional
 
-  epic-4: backlog
-  4-1-employee-eligibility-self-status-api: ready-for-dev
-  4-2-benefit-route-guard-and-safe-errors: ready-for-dev
-  4-3-protect-eligibility-admin-endpoints: ready-for-dev
-  4-4-ic-app-benefit-status-screen: ready-for-dev
+  epic-4: done
+  4-1-employee-eligibility-self-status-api: done
+  4-2-benefit-route-guard-and-safe-errors: done
+  4-3-protect-eligibility-admin-endpoints: done
+  4-4-ic-app-benefit-status-screen: done
   epic-4-retrospective: optional
 
   epic-5: backlog

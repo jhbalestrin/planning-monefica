@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { formatISO } from 'date-fns';
+import { BenefitStatusCard } from './src/components/BenefitStatusCard';
 import { store } from './src/state/store';
 
 function HomeScreen() {
@@ -16,10 +17,10 @@ function HomeScreen() {
       }}
     >
       <Text style={{ fontSize: 20, fontWeight: '600', marginBottom: 8 }}>IC App</Text>
-      <Text style={{ textAlign: 'center', color: '#444' }}>
-        Android-first Expo client. Configure API base URL via env (see ENV_SETUP.md). Boot:{' '}
-        {formatISO(new Date())}
+      <Text style={{ textAlign: 'center', color: '#444', marginBottom: 8 }}>
+        Android-first Expo client. Boot: {formatISO(new Date())}
       </Text>
+      <BenefitStatusCard />
       <StatusBar style="auto" />
     </View>
   );

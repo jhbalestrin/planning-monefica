@@ -9,7 +9,7 @@ nfr: [ELIG-NFR3, ELIG-NFR6]
 
 # Story 4.2: Benefit route guard and safe errors
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -27,8 +27,8 @@ so that **I do not think the app is broken**.
 
 ## Tasks / Subtasks
 
-- [ ] Nest guard or middleware on benefit prefix calling eligibility service.
-- [ ] Register codes in **shared-types** for ic-app mapping (**UX-DR2**).
+- [x] Nest guard or middleware on benefit prefix calling eligibility service.
+- [x] Register codes in **shared-types** for ic-app mapping (**UX-DR2**).
 
 ### References
 
@@ -38,8 +38,24 @@ so that **I do not think the app is broken**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `BenefitEligibilityGuard` after IC stack; `assertBenefitAccessAllowed` re-checks DB (active, onboarding, eligibility row).
+- `BenefitErrorCodes` in shared-types; example route `GET .../benefit/ping`.
+- Tests: `benefit-eligibility.guard.spec.ts`, eligibility service assert tests.
+
 ### File List
+
+- packages/shared-types/src/eligibility.ts
+- packages/server/src/eligibility/benefit-eligibility.guard.ts
+- packages/server/src/eligibility/benefit-eligibility.guard.spec.ts
+- packages/server/src/eligibility/eligibility.service.ts
+- packages/server/src/eligibility/eligibility.module.ts
+- packages/server/src/ic/ic.controller.ts
+- packages/server/docs/eligibility.md
