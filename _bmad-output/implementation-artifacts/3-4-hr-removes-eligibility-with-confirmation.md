@@ -9,7 +9,7 @@ nfr: [ELIG-NFR5, ELIG-NFR2]
 
 # Story 3.4: HR removes eligibility with confirmation
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -25,8 +25,8 @@ so that **I do not revoke access by mistake**.
 
 ## Tasks / Subtasks
 
-- [ ] Destructive flow in hr-admin modal; primary/secondary actions per UX-DR10 when modal used.
-- [ ] API records audit trail.
+- [x] Destructive flow in hr-admin modal; primary/secondary actions per UX-DR10 when modal used.
+- [x] API records audit trail.
 
 ### References
 
@@ -36,8 +36,20 @@ so that **I do not revoke access by mistake**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- Two-step MUI dialogs: warn → final confirm (UX-DR3); `DELETE .../eligibility/:userId` + `removed_eligible` audit row (ELIG-FR5, ELIG-NFR2).
+
 ### File List
+
+- packages/server/src/eligibility/eligibility.service.ts
+- packages/hr-admin/src/pages/eligibility/components/EligibilityListView.tsx
+- packages/hr-admin/src/pages/eligibility/containers/EligibilityContainer.tsx
+- packages/hr-admin/src/pages/eligibility/api/eligibilityApi.ts
+- packages/hr-admin/src/pages/eligibility/components/EligibilityListView.test.tsx

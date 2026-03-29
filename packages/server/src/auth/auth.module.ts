@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthAuditService } from './auth-audit.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { TenantUserLookupService } from './tenant-user-lookup.service';
 import { RequireClientGuard } from './guards/require-client.guard';
 import { RequirePlatformPrincipalGuard } from './guards/require-platform-principal.guard';
 import { RequireRolesGuard } from './guards/require-roles.guard';
@@ -52,6 +53,7 @@ import { TenantUser, TenantUserSchema } from './schemas/tenant-user.schema';
   providers: [
     AuthService,
     AuthAuditService,
+    TenantUserLookupService,
     JwtAuthGuard,
     RequireClientGuard,
     RequireRolesGuard,
@@ -61,6 +63,7 @@ import { TenantUser, TenantUserSchema } from './schemas/tenant-user.schema';
   ],
   exports: [
     AuthService,
+    TenantUserLookupService,
     JwtAuthGuard,
     JwtModule,
     MongooseModule,

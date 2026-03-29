@@ -18,6 +18,9 @@ export function HomeView({ loading, errorMessage, health }: HomeViewProps) {
         Example navigation using React Router{' '}
         <Button component={Link} to="/" variant="outlined" size="small">
           Home
+        </Button>{' '}
+        <Button component={Link} to="/eligibility" variant="contained" size="small">
+          Eligibility
         </Button>
       </Typography>
       {loading && <CircularProgress size={24} />}

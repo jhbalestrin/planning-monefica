@@ -8,7 +8,7 @@ ux: [UX-DR4]
 
 # Story 3.3: HR marks an employee eligible
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,8 +23,8 @@ so that **they can use the benefit**.
 
 ## Tasks / Subtasks
 
-- [ ] `POST`/`PATCH` mutation API; validate user is collaborator in tenant.
-- [ ] hr-admin UI: select employee + confirm add.
+- [x] `POST`/`PATCH` mutation API; validate user is collaborator in tenant.
+- [x] hr-admin UI: select employee + confirm add.
 
 ### References
 
@@ -34,8 +34,21 @@ so that **they can use the benefit**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `POST /api/v1/hr/tenants/:tenantId/eligibility` + `TenantUserLookupService.assertCollaboratorInTenant`; idempotent upsert + audit `marked_eligible`.
+- `GET .../eligibility/collaborators?excludeEligible=true` for picker; UI Autocomplete + confirm dialog.
+
 ### File List
+
+- packages/server/src/eligibility/eligibility.service.ts
+- packages/server/src/eligibility/dto/mark-eligibility.dto.ts
+- packages/hr-admin/src/pages/eligibility/components/EligibilityListView.tsx
+- packages/hr-admin/src/pages/eligibility/containers/EligibilityContainer.tsx
+- packages/hr-admin/src/pages/eligibility/api/eligibilityApi.ts

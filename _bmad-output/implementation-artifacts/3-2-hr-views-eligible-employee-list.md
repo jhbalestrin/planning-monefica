@@ -8,7 +8,7 @@ ux: [UX-DR4, UX-DR12]
 
 # Story 3.2: HR views eligible employee list
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -24,8 +24,8 @@ so that **I can audit our sponsorship**.
 
 ## Tasks / Subtasks
 
-- [ ] `GET` HR eligibility list API + hr-admin page module (`pages/eligibility/` pattern).
-- [ ] RTK Query slice in `api/`; container + presentational components.
+- [x] `GET` HR eligibility list API + hr-admin page module (`pages/eligibility/` pattern).
+- [x] RTK Query slice in `api/`; container + presentational components.
 
 ### References
 
@@ -35,8 +35,29 @@ so that **I can audit our sponsorship**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `GET /api/v1/hr/tenants/:tenantId/eligibility` + `EligibilityService.listForTenant`.
+- hr-admin: `pages/eligibility/` — MUI table sticky header + sticky email column (UX-DR12); theme via existing MUI (UX-DR4).
+- `EligibilityListView.test.tsx` smoke test.
+
 ### File List
+
+- packages/server/src/eligibility/eligibility.controller.ts
+- packages/server/src/eligibility/eligibility.service.ts
+- packages/hr-admin/src/pages/eligibility/EligibilityPage.tsx
+- packages/hr-admin/src/pages/eligibility/containers/EligibilityContainer.tsx
+- packages/hr-admin/src/pages/eligibility/components/EligibilityListView.tsx
+- packages/hr-admin/src/pages/eligibility/api/eligibilityApi.ts
+- packages/hr-admin/src/lib/apiBaseQuery.ts
+- packages/hr-admin/src/lib/hrTenantId.ts
+- packages/hr-admin/src/state/store.ts
+- packages/hr-admin/src/router.tsx
+- packages/hr-admin/src/pages/home/components/HomeView.tsx
+- packages/hr-admin/src/vite-env.d.ts

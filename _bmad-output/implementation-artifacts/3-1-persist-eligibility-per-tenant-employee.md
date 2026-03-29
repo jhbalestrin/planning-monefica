@@ -7,7 +7,7 @@ frs: [ELIG-FR1, ELIG-FR2, ELIG-FR3, ELIG-FR4, ELIG-FR5, ELIG-NFR1]
 
 # Story 3.1: Persist eligibility per tenant employee
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,9 +23,9 @@ so that **HR can manage sponsorship lists**.
 
 ## Tasks / Subtasks
 
-- [ ] Create `eligibility` module with owned schema(s) — e.g. `BenefitEligibility` or embedded pattern per architecture “Important” item (pick one and document).
-- [ ] Indexes: compound `(tenantId, userId)` unique if one row per user benefit.
-- [ ] Audit fields: `updatedBy`, `updatedAt` for ELIG-FR5.
+- [x] Create `eligibility` module with owned schema(s) — e.g. `BenefitEligibility` or embedded pattern per architecture “Important” item (pick one and document).
+- [x] Indexes: compound `(tenantId, userId)` unique if one row per user benefit.
+- [x] Audit fields: `updatedBy`, `updatedAt` for ELIG-FR5.
 
 ### References
 
@@ -36,8 +36,29 @@ so that **HR can manage sponsorship lists**.
 
 ### Agent Model Used
 
+Composer (Claude)
+
 ### Debug Log References
+
+(none)
 
 ### Completion Notes List
 
+- `EmployeeEligibility` (`employee_eligibility`): `tenantId`, `userId`, `createdBySub`, `updatedBySub`, Mongoose timestamps; unique `(tenantId,userId)`.
+- `EligibilityAuditEvent` (`eligibility_audit_events`): `targetUserId`, `actorSub`, `action` (`marked_eligible` | `removed_eligible`).
+- `TenantUserLookupService` in `auth` — eligibility uses service only (no cross-import of tenant schema).
+
 ### File List
+
+- packages/server/src/eligibility/eligibility.module.ts
+- packages/server/src/eligibility/eligibility.service.ts
+- packages/server/src/eligibility/eligibility.service.spec.ts
+- packages/server/src/eligibility/schemas/employee-eligibility.schema.ts
+- packages/server/src/eligibility/schemas/eligibility-audit-event.schema.ts
+- packages/server/src/auth/tenant-user-lookup.service.ts
+- packages/server/src/auth/tenant-user-lookup.service.spec.ts
+- packages/server/src/auth/auth.module.ts
+- packages/server/docs/eligibility.md
+- packages/shared-types/src/eligibility.ts
+- packages/shared-types/src/index.ts
+- packages/server/src/app.module.ts

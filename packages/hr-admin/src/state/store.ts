@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { eligibilityApi } from '../pages/eligibility/api/eligibilityApi';
 import { healthApi } from '../pages/home/api/healthApi';
 
 export const store = configureStore({
   reducer: {
     [healthApi.reducerPath]: healthApi.reducer,
+    [eligibilityApi.reducerPath]: eligibilityApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(healthApi.middleware),
+    getDefaultMiddleware().concat(healthApi.middleware, eligibilityApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
