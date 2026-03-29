@@ -8,7 +8,7 @@ ux: [UX-DR8, UX-DR12]
 
 # Story 7.1: Queue of unassigned bookings
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -24,8 +24,8 @@ so that **no employee is stuck**.
 
 ## Tasks / Subtasks
 
-- [ ] `GET` queue API + control-pane queue view.
-- [ ] Filter bookings by consultant’s allowed tenants.
+- [x] `GET` queue API + control-pane queue view.
+- [x] Filter bookings by consultant’s allowed tenants.
 
 ### References
 
@@ -35,8 +35,29 @@ so that **no employee is stuck**.
 
 ### Agent Model Used
 
+Cursor agent (Amelia / dev-story execution).
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `GET consultant/me/assignment-queue` returns rows with `awaitingAssignment: true`, scoped by `serveAllTenants` / `tenantIds` via `PlatformUser`.
+- Control-pane `/scheduling/queue`: MUI table + **Assumir** (UX-DR8/DR12); `schedulingQueueApi` + store wiring; nav from Home.
+
 ### File List
+
+- `packages/shared-types/src/scheduling.ts`
+- `packages/server/src/scheduling/schemas/booking.schema.ts`
+- `packages/server/src/scheduling/scheduling-legacy-migration.service.ts`
+- `packages/server/src/scheduling/scheduling.service.ts`
+- `packages/server/src/scheduling/scheduling-consultant.controller.ts`
+- `packages/server/src/scheduling/scheduling.module.ts`
+- `packages/server/src/scheduling/scheduling.service.spec.ts`
+- `packages/control-pane/src/pages/scheduling-queue/api/schedulingQueueApi.ts`
+- `packages/control-pane/src/pages/scheduling-queue/components/QueueView.tsx`
+- `packages/control-pane/src/pages/scheduling-queue/containers/QueueContainer.tsx`
+- `packages/control-pane/src/pages/scheduling-queue/SchedulingQueuePage.tsx`
+- `packages/control-pane/src/pages/scheduling-queue/SchedulingQueuePage.test.tsx`
+- `packages/control-pane/src/state/store.ts`
+- `packages/control-pane/src/router.tsx`
+- `packages/control-pane/src/pages/home/components/HomeView.tsx`

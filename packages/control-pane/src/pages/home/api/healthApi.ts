@@ -1,11 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import type { HealthResponseDto } from '@planning-monefica/shared-types';
+import { planningControlPaneBaseQuery } from '../../../lib/apiBaseQuery';
 
 export const healthApi = createApi({
   reducerPath: 'healthApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_BASE_URL ?? '',
-  }),
+  baseQuery: planningControlPaneBaseQuery,
   tagTypes: ['Health'],
   endpoints: (builder) => ({
     getHealth: builder.query<HealthResponseDto, void>({

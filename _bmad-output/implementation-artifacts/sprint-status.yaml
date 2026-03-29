@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: "2026-03-29T15:49:32Z"
-last_updated: "2026-03-29T23:30:00Z"
+last_updated: "2026-03-28T16:00:00Z"
 project: planning-monefica
 project_key: NOKEY
 tracking_system: file-system
@@ -77,32 +77,32 @@ development_status:
   4-4-ic-app-benefit-status-screen: done
   epic-4-retrospective: optional
 
-  epic-5: backlog
-  5-1-scheduling-domain-models-and-module: ready-for-dev
-  5-2-consultant-availability-crud-api: ready-for-dev
-  5-3-derive-slot-list-with-double-book-prevention: ready-for-dev
-  5-4-consultant-calendar-view-in-control-pane: ready-for-dev
+  epic-5: done
+  5-1-scheduling-domain-models-and-module: done
+  5-2-consultant-availability-crud-api: done
+  5-3-derive-slot-list-with-double-book-prevention: done
+  5-4-consultant-calendar-view-in-control-pane: done
   epic-5-retrospective: optional
 
-  epic-6: backlog
-  6-1-list-bookable-slots-for-eligible-employees: ready-for-dev
-  6-2-create-booking-with-atomic-reservation: ready-for-dev
-  6-3-list-and-detail-own-bookings: ready-for-dev
-  6-4-cancel-booking-per-policy: ready-for-dev
-  6-5-reschedule-without-double-reservation: ready-for-dev
-  6-6-enforce-hr-admin-out-of-consultant-scheduling-apis: ready-for-dev
+  epic-6: done
+  6-1-list-bookable-slots-for-eligible-employees: done
+  6-2-create-booking-with-atomic-reservation: done
+  6-3-list-and-detail-own-bookings: done
+  6-4-cancel-booking-per-policy: done
+  6-5-reschedule-without-double-reservation: done
+  6-6-enforce-hr-admin-out-of-consultant-scheduling-apis: done
   epic-6-retrospective: optional
 
-  epic-7: backlog
-  7-1-queue-of-unassigned-bookings: ready-for-dev
-  7-2-assign-booking-to-self: ready-for-dev
-  7-3-complete-cancel-or-no-show-with-reason: ready-for-dev
-  7-4-platform-admin-override: ready-for-dev
+  epic-7: done
+  7-1-queue-of-unassigned-bookings: done
+  7-2-assign-booking-to-self: done
+  7-3-complete-cancel-or-no-show-with-reason: done
+  7-4-platform-admin-override: done
   epic-7-retrospective: optional
 
-  epic-8: backlog
-  8-1-mui-theme-tokens-for-new-surfaces: ready-for-dev
-  8-2-cross-platform-status-chip-badge: ready-for-dev
-  8-3-accessibility-baselines-for-web-modals-and-motion: ready-for-dev
-  8-4-ic-app-spacing-and-typography-constants: ready-for-dev
+  epic-8: done
+  8-1-mui-theme-tokens-for-new-surfaces: done
+  8-2-cross-platform-status-chip-badge: done
+  8-3-accessibility-baselines-for-web-modals-and-motion: done
+  8-4-ic-app-spacing-and-typography-constants: done
   epic-8-retrospective: optional

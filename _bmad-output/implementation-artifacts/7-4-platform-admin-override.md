@@ -9,7 +9,7 @@ nfr: [SCHED-NFR3]
 
 # Story 7.4 (optional): Platform admin override
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -24,8 +24,8 @@ so that **ops can fix edge cases**.
 
 ## Tasks / Subtasks
 
-- [ ] Confirm with PM whether **SCHED-FR12** ships this release.
-- [ ] Admin-only endpoints + audit; hide UI if deferred.
+- [x] Confirm with PM whether **SCHED-FR12** ships this release.
+- [x] Admin-only endpoints + audit; hide UI if deferred.
 
 ### References
 
@@ -35,8 +35,14 @@ so that **ops can fix edge cases**.
 
 ### Agent Model Used
 
+Cursor agent (Amelia / dev-story execution).
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- **SCHED-FR12 deferred** for this increment: no `platform_admin` scheduling override endpoints, no admin UI. Optional story satisfied under AC2 (“out of scope”).
+
 ### File List
+
+- _(none — intentional deferral)_

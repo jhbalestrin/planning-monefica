@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { formatISO } from 'date-fns';
 import { BenefitStatusCard } from './src/components/BenefitStatusCard';
+import { PlanningSessionsCard } from './src/components/PlanningSessionsCard';
 import { store } from './src/state/store';
 
 function HomeScreen() {
@@ -21,6 +22,7 @@ function HomeScreen() {
         Android-first Expo client. Boot: {formatISO(new Date())}
       </Text>
       <BenefitStatusCard />
+      <PlanningSessionsCard />
       <StatusBar style="auto" />
     </View>
   );

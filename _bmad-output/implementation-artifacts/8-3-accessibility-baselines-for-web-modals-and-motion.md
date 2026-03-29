@@ -7,7 +7,7 @@ ux: [UX-DR9, UX-DR10, UX-DR11]
 
 # Story 8.3: Accessibility baselines for web modals and motion
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,8 +23,8 @@ so that **I can use admin and consultant UIs comfortably**.
 
 ## Tasks / Subtasks
 
-- [ ] Shared modal wrapper or document pattern using MUI `Dialog` props.
-- [ ] Audit destructive flows (Epic 3.4) and booking confirmations.
+- [x] Shared modal wrapper or document pattern using MUI `Dialog` props.
+- [x] Audit destructive flows (Epic 3.4) and booking confirmations.
 
 ### References
 
@@ -34,8 +34,24 @@ so that **I can use admin and consultant UIs comfortably**.
 
 ### Agent Model Used
 
+Cursor agent (Amelia / Epic 8 execution).
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `PlanningDialog` (hr-admin + control-pane): default `scroll="paper"`, `disableEscapeKeyDown={false}`; JSDoc references UX-DR10. Eligibility remove/add dialogs + queue close dialog use wrapper + `aria-labelledby` / title ids.
+- Theme: `MuiCssBaseline` override short-circuits animations/transitions under `prefers-reduced-motion` (UX-DR11).
+- Primary `palette.primary.main` set to `#1565c0` (hr-admin) / existing consultant greens (control-pane) for button contrast baseline (UX-DR9).
+- Tests: `PlanningDialog.test.tsx` in both web packages.
+
 ### File List
+
+- `packages/hr-admin/src/components/PlanningDialog.tsx`
+- `packages/hr-admin/src/components/PlanningDialog.test.tsx`
+- `packages/hr-admin/src/theme/appTheme.ts`
+- `packages/hr-admin/src/pages/eligibility/components/EligibilityListView.tsx`
+- `packages/control-pane/src/components/PlanningDialog.tsx`
+- `packages/control-pane/src/components/PlanningDialog.test.tsx`
+- `packages/control-pane/src/theme/appTheme.ts`
+- `packages/control-pane/src/pages/scheduling-queue/components/QueueView.tsx`

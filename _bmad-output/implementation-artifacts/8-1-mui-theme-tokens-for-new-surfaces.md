@@ -7,7 +7,7 @@ ux: [UX-DR4]
 
 # Story 8.1: MUI theme tokens for new surfaces
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,8 +22,8 @@ so that **new pages look consistent**.
 
 ## Tasks / Subtasks
 
-- [ ] Audit `theme.ts` (or equivalent) in both packages; extend tokens.
-- [ ] Refactor one pilot screen to use tokens as reference.
+- [x] Audit `theme.ts` (or equivalent) in both packages; extend tokens.
+- [x] Refactor one pilot screen to use tokens as reference.
 
 ### References
 
@@ -33,8 +33,24 @@ so that **new pages look consistent**.
 
 ### Agent Model Used
 
+Cursor agent (Amelia / Epic 8 execution).
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `PLANNING_WEB_UX` in `shared-types` centralizes layout/table numeric tokens; MUI `spacing` + `shape.borderRadius` + typography roles in `createHrAdminTheme` / `createControlPaneTheme`.
+- Pilots: `EligibilityListView`, `HomeView` (hr-admin); `SchedulingView`, `QueueView` (control-pane) import `PLANNING_WEB_UX` for maxWidth/minWidth.
+
 ### File List
+
+- `packages/shared-types/src/planningUxTokens.ts`
+- `packages/shared-types/src/index.ts`
+- `packages/hr-admin/src/theme/appTheme.ts`
+- `packages/hr-admin/src/main.tsx`
+- `packages/hr-admin/src/pages/eligibility/components/EligibilityListView.tsx`
+- `packages/hr-admin/src/pages/home/components/HomeView.tsx`
+- `packages/control-pane/src/theme/appTheme.ts`
+- `packages/control-pane/src/main.tsx`
+- `packages/control-pane/src/pages/scheduling/components/SchedulingView.tsx`
+- `packages/control-pane/src/pages/scheduling-queue/components/QueueView.tsx`

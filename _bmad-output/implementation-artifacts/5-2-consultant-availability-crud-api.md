@@ -8,7 +8,7 @@ ux: [UX-DR4]
 
 # Story 5.2: Consultant availability CRUD API
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,8 +23,8 @@ so that **employees only see times I offer**.
 
 ## Tasks / Subtasks
 
-- [ ] REST endpoints + `ConsultantGuard` + **AD-SCHED-001** tenant visibility (consultant identity from `PlatformUser`).
-- [ ] DTOs in **shared-types**.
+- [x] REST endpoints + `ConsultantGuard` + **AD-SCHED-001** tenant visibility (consultant identity from `PlatformUser`).
+- [x] DTOs in **shared-types**.
 
 ### References
 
@@ -34,8 +34,26 @@ so that **employees only see times I offer**.
 
 ### Agent Model Used
 
+Composer / GPT-5.1
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `PlatformUserLookupService` (auth) loads `serveAllTenants` / `tenantIds` / `roles` / `active` from DB; `SchedulingService` enforces tenant on CRUD (AD-SCHED-001).
+- Consultant-only routes under `/api/v1/scheduling/consultant/me/availability` (POST, GET, PATCH `:id`, DELETE `:id`); overlap rejected with `SCHED_AVAILABILITY_OVERLAP`.
+- shared-types: `packages/shared-types/src/scheduling.ts` (+ barrel export).
+
 ### File List
+
+- `packages/server/src/auth/platform-user-lookup.service.ts`
+- `packages/server/src/auth/platform-user-lookup.service.spec.ts`
+- `packages/server/src/auth/auth.module.ts`
+- `packages/server/src/scheduling/scheduling.service.ts`
+- `packages/server/src/scheduling/scheduling.service.spec.ts`
+- `packages/server/src/scheduling/scheduling-consultant.controller.ts`
+- `packages/server/src/scheduling/dto/create-availability-block.dto.ts`
+- `packages/server/src/scheduling/dto/update-availability-block.dto.ts`
+- `packages/server/src/scheduling/dto/date-range-query.dto.ts`
+- `packages/shared-types/src/scheduling.ts`
+- `packages/shared-types/src/index.ts`

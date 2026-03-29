@@ -7,7 +7,7 @@ frs: [SCHED-FR8]
 
 # Story 6.5: Reschedule without double reservation
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,8 +22,8 @@ so that **my plan fits my calendar**.
 
 ## Tasks / Subtasks
 
-- [ ] Single transactional flow or two-phase with rollback.
-- [ ] Reuse idempotency pattern if applicable.
+- [x] Single transactional flow or two-phase with rollback.
+- [x] Reuse idempotency pattern if applicable.
 
 ### References
 
@@ -33,8 +33,19 @@ so that **my plan fits my calendar**.
 
 ### Agent Model Used
 
+Composer / GPT-5.1
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `POST .../bookings/:bookingId/reschedule`: `assertIntervalBookable(..., { ignoreBookingId })` then cancel old `confirmed` → `create` new; on E11000 restore old to `confirmed` and `SLOT_TAKEN`.
+- Optional `Idempotency-Key` + `scheduling_idempotency` for `reschedule_booking` op.
+- ic-app: `useRescheduleBookingMutation` exported (UI hook for future picker).
+
 ### File List
+
+- `packages/server/src/scheduling/scheduling.service.ts`
+- `packages/server/src/scheduling/dto/reschedule-collaborator-booking.dto.ts`
+- `packages/server/src/ic/ic.controller.ts`
+- `packages/ic-app/src/api/schedulingApi.ts`

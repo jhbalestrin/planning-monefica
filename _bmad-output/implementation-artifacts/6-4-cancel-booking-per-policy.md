@@ -8,7 +8,7 @@ ux: [UX-DR2]
 
 # Story 6.4: Cancel booking per policy
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,8 +23,8 @@ so that **I can free the slot**.
 
 ## Tasks / Subtasks
 
-- [ ] Policy flags (env or constants); `POST` cancel endpoint.
-- [ ] Release slot for slot derivation (Epic 5.3).
+- [x] Policy flags (env or constants); `POST` cancel endpoint.
+- [x] Release slot for slot derivation (Epic 5.3).
 
 ### References
 
@@ -34,8 +34,19 @@ so that **I can free the slot**.
 
 ### Agent Model Used
 
+Composer / GPT-5.1
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `SCHED_BOOKING_MODIFY_MIN_HOURS_BEFORE` (default 24) + must be before `slotStartUtc`; `state` → `cancelled` (partial unique no longer applies → slot free in derivation).
+- `POST .../bookings/:bookingId/cancel`; `SCHED_BOOKING_NOT_CANCELLABLE` mapped in `schedulingPtBr` (UX-DR2).
+
 ### File List
+
+- `packages/server/src/scheduling/scheduling.service.ts`
+- `packages/server/src/ic/ic.controller.ts`
+- `packages/ic-app/src/api/schedulingApi.ts`
+- `packages/ic-app/src/components/PlanningSessionsCard.tsx`
+- `packages/ic-app/src/i18n/schedulingPtBr.ts`

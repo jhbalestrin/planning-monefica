@@ -42,6 +42,7 @@ describe('EligibilityListView', () => {
     expect(screen.getByRole('heading', { name: /eligible employees/i })).toBeInTheDocument();
     expect(screen.getByRole('table')).toBeInTheDocument();
     expect(screen.getByText('a@example.com')).toBeInTheDocument();
+    expect(screen.getByText('Eligible')).toBeInTheDocument();
   });
 
   it('opens first-step remove dialog', () => {

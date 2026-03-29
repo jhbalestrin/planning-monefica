@@ -8,7 +8,7 @@ ux: [UX-DR2, UX-DR7]
 
 # Story 6.1: List bookable slots for eligible employees
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,8 +23,8 @@ so that **I can choose a session**.
 
 ## Tasks / Subtasks
 
-- [ ] ic-app + API `GET` slots; reuse Epic 4 eligibility checks.
-- [ ] Confirmation copy path toward **UX-DR7**.
+- [x] ic-app + API `GET` slots; reuse Epic 4 eligibility checks.
+- [x] Confirmation copy path toward **UX-DR7**.
 
 ### References
 
@@ -34,8 +34,25 @@ so that **I can choose a session**.
 
 ### Agent Model Used
 
+Composer / GPT-5.1
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `GET /api/v1/ic/tenants/:tenantId/scheduling/slots` behind `BenefitEligibilityGuard` (SCHED-FR13); `listBookableSlotsForCollaborator` merges availability across consultants for tenant (SCHED-FR4).
+- `SCHED_SLOT_QUERY_MAX_DAYS` (default 31) caps range → `SCHED_RANGE_EXCEEDS_MAX`.
+- ic-app: `PlanningSessionsCard` + `schedulingApi` + `weekRangeUtc`; confirmation line helper in `schedulingPtBr` (UX-DR7 path).
+
 ### File List
+
+- `packages/server/src/ic/ic.controller.ts`
+- `packages/server/src/ic/ic.module.ts`
+- `packages/server/src/scheduling/scheduling.service.ts`
+- `packages/server/src/scheduling/dto/collaborator-slots-query.dto.ts`
+- `packages/shared-types/src/scheduling.ts`
+- `packages/ic-app/src/api/schedulingApi.ts`
+- `packages/ic-app/src/components/PlanningSessionsCard.tsx`
+- `packages/ic-app/src/i18n/schedulingPtBr.ts`
+- `packages/ic-app/src/state/store.ts`
+- `packages/ic-app/App.tsx`

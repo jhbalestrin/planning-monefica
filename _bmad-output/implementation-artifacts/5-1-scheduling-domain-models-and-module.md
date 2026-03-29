@@ -8,7 +8,7 @@ nfr: [SCHED-NFR4]
 
 # Story 5.1: Scheduling domain models and module
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -24,8 +24,8 @@ so that **consultants and employees share one source of truth**.
 
 ## Tasks / Subtasks
 
-- [ ] Module skeleton + `AvailabilityBlock` + `Booking` (names per team).
-- [ ] No cross-import of other modules’ schemas.
+- [x] Module skeleton + `AvailabilityBlock` + `Booking` (names per team).
+- [x] No cross-import of other modules’ schemas.
 
 ### References
 
@@ -35,8 +35,17 @@ so that **consultants and employees share one source of truth**.
 
 ### Agent Model Used
 
+Composer / GPT-5.1
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- Mongoose models: `ConsultantAvailabilityBlock` (collection `consultant_availability_blocks`), `Booking` (collection `bookings`); UTC `Date` fields; booking includes `tenantId`, `employeeUserId`; partial unique index on `(consultantId, slotStartUtc)` for `state: confirmed` (SCHED-NFR1).
+- Scheduling module registers schemas via `MongooseModule.forFeature`; no imports of other modules’ schema classes.
+
 ### File List
+
+- `packages/server/src/scheduling/schemas/consultant-availability-block.schema.ts`
+- `packages/server/src/scheduling/schemas/booking.schema.ts`
+- `packages/server/src/scheduling/scheduling.module.ts`

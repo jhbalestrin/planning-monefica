@@ -18,6 +18,12 @@ export function HomeView({ loading, errorMessage, health }: HomeViewProps) {
         Example navigation using React Router{' '}
         <Button component={Link} to="/" variant="outlined" size="small">
           Home
+        </Button>{' '}
+        <Button component={Link} to="/scheduling" variant="outlined" size="small">
+          Scheduling
+        </Button>{' '}
+        <Button component={Link} to="/scheduling/queue" variant="outlined" size="small">
+          Fila
         </Button>
       </Typography>
       {loading && <CircularProgress size={24} />}

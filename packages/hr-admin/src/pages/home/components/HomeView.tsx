@@ -1,6 +1,7 @@
 import { Alert, Box, Button, CircularProgress, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import type { HealthResponseDto } from '@planning-monefica/shared-types';
+import { PLANNING_WEB_UX } from '@planning-monefica/shared-types';
 
 export type HomeViewProps = {
   loading: boolean;
@@ -10,7 +11,7 @@ export type HomeViewProps = {
 
 export function HomeView({ loading, errorMessage, health }: HomeViewProps) {
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 4, maxWidth: PLANNING_WEB_UX.layout.pageMaxWidthMd, mx: 'auto' }}>
       <Typography variant="h4" component="h1" gutterBottom>
         HR Admin
       </Typography>

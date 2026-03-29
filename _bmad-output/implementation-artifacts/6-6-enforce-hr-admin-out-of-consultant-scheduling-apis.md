@@ -7,7 +7,7 @@ frs: [SCHED-FR15]
 
 # Story 6.6: Enforce hr_admin out of consultant scheduling APIs
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -21,8 +21,8 @@ so that **roles stay separated**.
 
 ## Tasks / Subtasks
 
-- [ ] Audit scheduling routes; apply `planning_consultant` or `platform_admin` where appropriate.
-- [ ] Tests: hr_admin denied.
+- [x] Audit scheduling routes; apply `planning_consultant` or `platform_admin` where appropriate.
+- [x] Tests: hr_admin denied.
 
 ### References
 
@@ -32,8 +32,19 @@ so that **roles stay separated**.
 
 ### Agent Model Used
 
+Composer / GPT-5.1
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `DenyHrAdminConsultantSchedulingGuard` on consultant **mutations** only: `POST/PATCH/DELETE .../consultant/me/availability` (SCHED-FR15); `SCHED_HR_ADMIN_CONSULTANT_SCHEDULING_FORBIDDEN`.
+- Jest: `deny-hr-admin-consultant-scheduling.guard.spec.ts`.
+
 ### File List
+
+- `packages/server/src/scheduling/guards/deny-hr-admin-consultant-scheduling.guard.ts`
+- `packages/server/src/scheduling/guards/deny-hr-admin-consultant-scheduling.guard.spec.ts`
+- `packages/server/src/scheduling/scheduling-consultant.controller.ts`
+- `packages/server/src/scheduling/scheduling.module.ts`
+- `packages/shared-types/src/scheduling.ts`

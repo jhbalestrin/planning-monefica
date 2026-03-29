@@ -8,7 +8,7 @@ nfr: [SCHED-NFR1]
 
 # Story 5.3: Derive slot list with double-book prevention
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,8 +23,8 @@ so that **two people cannot reserve the same consultant instant**.
 
 ## Tasks / Subtasks
 
-- [ ] Slot derivation service; query bookings overlapping window.
-- [ ] Prepare for Epic 6.2 atomic reservation (compound unique or lock doc).
+- [x] Slot derivation service; query bookings overlapping window.
+- [x] Prepare for Epic 6.2 atomic reservation (compound unique or lock doc).
 
 ### References
 
@@ -34,8 +34,23 @@ so that **two people cannot reserve the same consultant instant**.
 
 ### Agent Model Used
 
+Composer / GPT-5.1
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `listFreeSlotsForTenant`: availability segments ∩ query window minus **confirmed** bookings per tenant (`subtractIntervals` in `interval.util.ts`).
+- `GET /api/v1/scheduling/consultant/me/slots` with `tenantId`, `fromUtc`, `toUtc`.
+- Booking schema: partial unique `{ consultantId, slotStartUtc }` when `state: 'confirmed'`; optional `idempotencyKey` for Epic 6.
+
 ### File List
+
+- `packages/server/src/scheduling/interval.util.ts`
+- `packages/server/src/scheduling/interval.util.spec.ts`
+- `packages/server/src/scheduling/schemas/booking.schema.ts`
+- `packages/server/src/scheduling/scheduling.service.ts`
+- `packages/server/src/scheduling/scheduling.service.spec.ts`
+- `packages/server/src/scheduling/scheduling-consultant.controller.ts`
+- `packages/server/src/scheduling/dto/list-slots-query.dto.ts`
+- `packages/shared-types/src/scheduling.ts`

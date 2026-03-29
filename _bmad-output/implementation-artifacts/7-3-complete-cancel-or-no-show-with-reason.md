@@ -8,7 +8,7 @@ nfr: [SCHED-NFR3]
 
 # Story 7.3: Complete, cancel, or no-show with reason
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -23,8 +23,8 @@ so that **reporting stays accurate**.
 
 ## Tasks / Subtasks
 
-- [ ] Terminal state transitions + validation (only owner consultant).
-- [ ] Reason codes in **shared-types**.
+- [x] Terminal state transitions + validation (only owner consultant).
+- [x] Reason codes in **shared-types**.
 
 ### References
 
@@ -34,8 +34,29 @@ so that **reporting stays accurate**.
 
 ### Agent Model Used
 
+Cursor agent (Amelia / dev-story execution).
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `BookingState` extended with `completed`; `CloseBookingRequestDto` + `BookingClosureReasonCode`; server validates outcome/reason pairs; invalid → `SCHED_INVALID_CLOSURE_REASON`.
+- `POST consultant/me/bookings/:bookingId/close`; `GET consultant/me/open-assigned-bookings` for “Minhas sessões abertas”.
+- Close + assign audited via `SchedulingBookingAudit`.
+- Control-pane close dialog (outcome + reason); `ic-app`: **Concluída** chip + “aguardando consultor” when `awaitingAssignment`.
+
 ### File List
+
+- `packages/shared-types/src/scheduling.ts`
+- `packages/server/src/scheduling/schemas/booking.schema.ts`
+- `packages/server/src/scheduling/schemas/scheduling-booking-audit.schema.ts`
+- `packages/server/src/scheduling/dto/close-booking.dto.ts`
+- `packages/server/src/scheduling/scheduling.service.ts`
+- `packages/server/src/scheduling/scheduling-consultant.controller.ts`
+- `packages/server/src/scheduling/scheduling.module.ts`
+- `packages/server/src/scheduling/scheduling.service.spec.ts`
+- `packages/control-pane/src/pages/scheduling-queue/api/schedulingQueueApi.ts`
+- `packages/control-pane/src/pages/scheduling-queue/components/QueueView.tsx`
+- `packages/control-pane/src/pages/scheduling-queue/containers/QueueContainer.tsx`
+- `packages/ic-app/src/i18n/schedulingPtBr.ts`
+- `packages/ic-app/src/components/PlanningSessionsCard.tsx`

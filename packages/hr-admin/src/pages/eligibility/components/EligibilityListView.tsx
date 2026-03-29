@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -23,6 +22,9 @@ import type {
   EligibilityCollaboratorOptionDto,
   EligibilityListItemDto,
 } from '@planning-monefica/shared-types';
+import { PLANNING_WEB_UX } from '@planning-monefica/shared-types';
+import { BenefitEligibilityStatusChip } from '../../../components/BenefitEligibilityStatusChip';
+import { PlanningDialog } from '../../../components/PlanningDialog';
 
 export type EligibilityListViewProps = {
   tenantId: string;
@@ -72,7 +74,13 @@ export function EligibilityListView({
   removing,
 }: EligibilityListViewProps) {
   return (
-    <Box sx={{ p: 3, maxWidth: 1200, mx: 'auto' }}>
+    <Box
+      sx={{
+        p: 3,
+        maxWidth: PLANNING_WEB_UX.layout.pageMaxWidthLg,
+        mx: 'auto',
+      }}
+    >
       <Typography variant="h4" component="h1" gutterBottom>
         Eligible employees
       </Typography>
@@ -98,7 +106,7 @@ export function EligibilityListView({
         sx={{
           maxHeight: '70vh',
           overflow: 'auto',
-          minWidth: 720,
+          minWidth: PLANNING_WEB_UX.table.minWidthWide,
         }}
       >
         <Table stickyHeader size="small" aria-label="Eligible employees">
@@ -110,15 +118,22 @@ export function EligibilityListView({
                   left: 0,
                   zIndex: 3,
                   bgcolor: 'background.paper',
-                  minWidth: 200,
+                  minWidth: PLANNING_WEB_UX.table.stickyPrimaryColumnMinWidth,
                   boxShadow: 1,
                 }}
               >
                 Email
               </TableCell>
-              <TableCell sx={{ minWidth: 160 }}>Last updated</TableCell>
-              <TableCell sx={{ minWidth: 140 }}>Updated by (sub)</TableCell>
-              <TableCell align="right" sx={{ minWidth: 120 }}>
+              <TableCell sx={{ minWidth: PLANNING_WEB_UX.table.colStatusMinWidth }}>
+                Status
+              </TableCell>
+              <TableCell sx={{ minWidth: PLANNING_WEB_UX.table.colLastUpdatedMinWidth }}>
+                Last updated
+              </TableCell>
+              <TableCell sx={{ minWidth: PLANNING_WEB_UX.table.colUpdatedByMinWidth }}>
+                Updated by (sub)
+              </TableCell>
+              <TableCell align="right" sx={{ minWidth: PLANNING_WEB_UX.table.colActionsMinWidth }}>
                 Actions
               </TableCell>
             </TableRow>
@@ -126,13 +141,13 @@ export function EligibilityListView({
           <TableBody>
             {loadingList ? (
               <TableRow>
-                <TableCell colSpan={4}>
+                <TableCell colSpan={5}>
                   <CircularProgress size={28} />
                 </TableCell>
               </TableRow>
             ) : rows.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={4}>
+                <TableCell colSpan={5}>
                   <Typography color="text.secondary">
                     No eligible employees yet.
                   </Typography>
@@ -151,6 +166,9 @@ export function EligibilityListView({
                     }}
                   >
                     {row.email}
+                  </TableCell>
+                  <TableCell>
+                    <BenefitEligibilityStatusChip status="eligible" />
                   </TableCell>
                   <TableCell>
                     {format(new Date(row.updatedAt), 'PPp')}
@@ -177,8 +195,14 @@ export function EligibilityListView({
         </Table>
       </TableContainer>
 
-      <Dialog open={addOpen} onClose={onCloseAdd} fullWidth maxWidth="sm">
-        <DialogTitle>Add eligibility</DialogTitle>
+      <PlanningDialog
+        open={addOpen}
+        onClose={onCloseAdd}
+        fullWidth
+        maxWidth="sm"
+        aria-labelledby="eligibility-add-title"
+      >
+        <DialogTitle id="eligibility-add-title">Add eligibility</DialogTitle>
         <DialogContent>
           {loadingCollaborators ? (
             <CircularProgress size={28} />
@@ -209,15 +233,16 @@ export function EligibilityListView({
             {adding ? 'Saving…' : 'Confirm add'}
           </Button>
         </DialogActions>
-      </Dialog>
+      </PlanningDialog>
 
-      <Dialog
+      <PlanningDialog
         open={removePhase === 'warn'}
         onClose={onRemoveCancel}
         fullWidth
         maxWidth="sm"
+        aria-labelledby="eligibility-remove-warn-title"
       >
-        <DialogTitle>Remove eligibility?</DialogTitle>
+        <DialogTitle id="eligibility-remove-warn-title">Remove eligibility?</DialogTitle>
         <DialogContent>
           <Typography>
             You are starting removal of benefit access for{' '}
@@ -230,15 +255,16 @@ export function EligibilityListView({
             Continue
           </Button>
         </DialogActions>
-      </Dialog>
+      </PlanningDialog>
 
-      <Dialog
+      <PlanningDialog
         open={removePhase === 'final'}
         onClose={onRemoveCancel}
         fullWidth
         maxWidth="sm"
+        aria-labelledby="eligibility-remove-final-title"
       >
-        <DialogTitle>Confirm removal</DialogTitle>
+        <DialogTitle id="eligibility-remove-final-title">Confirm removal</DialogTitle>
         <DialogContent>
           <Typography>
             Remove sponsored benefit access for <strong>{pendingEmail}</strong>
@@ -257,7 +283,7 @@ export function EligibilityListView({
             {removing ? 'Removing…' : 'Remove access'}
           </Button>
         </DialogActions>
-      </Dialog>
+      </PlanningDialog>
     </Box>
   );
 }

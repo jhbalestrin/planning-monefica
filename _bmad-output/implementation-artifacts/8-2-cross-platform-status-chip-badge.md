@@ -7,7 +7,7 @@ ux: [UX-DR6, UX-DR9]
 
 # Story 8.2: Cross-platform status chip / badge
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -22,8 +22,8 @@ so that **eligibility and booking states match across apps**.
 
 ## Tasks / Subtasks
 
-- [ ] Shared mapping util or small components in each app (no duplicate enum strings).
-- [ ] Document color pairs for WCAG check.
+- [x] Shared mapping util or small components in each app (no duplicate enum strings).
+- [x] Document color pairs for WCAG check.
 
 ### References
 
@@ -33,8 +33,26 @@ so that **eligibility and booking states match across apps**.
 
 ### Agent Model Used
 
+Cursor agent (Amelia / Epic 8 execution).
+
 ### Debug Log References
 
 ### Completion Notes List
 
+- `statusPresentation.ts`: `STATUS_CHIP_COLOR_PAIRS` + `wcagNote` per semantic; `benefitEligibilityStatusPresentation`, `bookingStatePresentation`, `statusSemanticToChipColors`.
+- Web: `BenefitEligibilityStatusChip`, `BookingStateChip`; eligibility table Status column; scheduling calendar booking rows use `BookingStateChip`.
+- Mobile: `BenefitStatusCard`, `PlanningSessionsCard` use shared color functions; labels remain pt-BR in `i18n/*`.
+- Tests: `packages/control-pane/src/lib/statusPresentation.test.ts`.
+
 ### File List
+
+- `packages/shared-types/src/statusPresentation.ts`
+- `packages/shared-types/src/index.ts`
+- `packages/hr-admin/src/components/BenefitEligibilityStatusChip.tsx`
+- `packages/hr-admin/src/pages/eligibility/components/EligibilityListView.tsx`
+- `packages/hr-admin/src/pages/eligibility/components/EligibilityListView.test.tsx`
+- `packages/control-pane/src/components/BookingStateChip.tsx`
+- `packages/control-pane/src/pages/scheduling/components/SchedulingView.tsx`
+- `packages/control-pane/src/lib/statusPresentation.test.ts`
+- `packages/ic-app/src/components/BenefitStatusCard.tsx`
+- `packages/ic-app/src/components/PlanningSessionsCard.tsx`
